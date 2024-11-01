@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Lato:wght@400;700&display=swap');
+
+
+@tailwind base;
+
+
+@tailwind components;
+
+
+@tailwind utilities;
+
+
+.hide-scrollbar {
+    overflow-x: auto;
+    scrollbar-width: none; 
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+    display: none; 
+}
+
+body {
+   
+    background-color: #F9F9F9;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.rounded-full {
+    border-radius: 9999px;
+}
+
+.w-6 {
+    width: 1.1rem;
+}
+
+.h-6 {
+    height: 1.1rem;
+}
+
+.text-xs {
+    font-size: 0.75rem;
+}
+
+.text-white {
+    color: #fff;
+}
+
+@layer utilities {
+    .clip-corner {
+      clip-path: polygon(0 0, 100% 0, 0 100%);
+    }
+  }
+
+  .admin-item {
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.admin-item:hover {
+    background-color: #5cc3da;
+}
+.whatsapp_float {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    z-index: 100;
+}
+
+.whatsapp_icon {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.whatsapp_float:hover .whatsapp_icon {
+    transform: scale(1.1);
+}
