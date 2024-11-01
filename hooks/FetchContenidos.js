@@ -7,7 +7,7 @@ export const useFetchContenidos = () => {
   const getContenidos = async () => {
     setIsLoading(true); 
     try {
-      const response = await fetch('https://ciclo-hidalgo-desarrollo.vercel.app/api/api/contenidos/all');
+      const response = await fetch('http://127.0.0.1:8000/api/contenidos/all');
       const result = await response.json();
       setContenidos(result.contenidos || []);
     } catch (error) {

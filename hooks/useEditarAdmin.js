@@ -7,7 +7,7 @@ export const useEditarAdmin = () => {
   const editar = async (id, nombre, email, contacto, direccion, cumpleanos) => {
     setIsLoading(true);
     try {
-      const response = await fetch(`https://ciclo-hidalgo-desarrollo.vercel.app/api/api/admin/update/${id}`, {
+      const response = await fetch(`http://127.0.0.1:8000/api/admin/update/${id}`, {
         method: 'PUT',
         headers: {
           'Accept': 'application/json',

@@ -6,7 +6,7 @@ export const useRegistro = () => {
 
   const register = async (email, password, nombre, direccion, cumpleanos, contacto, boletin ) => {
     try {
-      const response = await fetch('https://ciclo-hidalgo-desarrollo.vercel.app/api/api/user/signin', {
+      const response = await fetch('http://127.0.0.1:8000/api/user/signin', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',

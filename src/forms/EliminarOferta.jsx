@@ -13,7 +13,7 @@ export default function EliminarOferta() {
     useEffect(() => {
         const fetchProductos = async () => {
             try {
-                const response = await fetch('https://ciclo-hidalgo-desarrollo.vercel.app/api/api/con-descuento/all');
+                const response = await fetch('http://127.0.0.1:8000/api/con-descuento/all');
                 const data = await response.json();
                 setProductos(data.productos);
             } catch (error) {

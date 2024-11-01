@@ -7,7 +7,7 @@ export const useCrearContenido = () => {
     const crear = async (titulo, descripcion, video_incrustado) => {
         setIsLoading(true);
         try {
-            const response = await fetch('https://ciclo-hidalgo-desarrollo.vercel.app/api/api/contenido/creacion', {
+            const response = await fetch('http://127.0.0.1:8000/api/contenido/creacion', {
                 method: 'POST', 
                 headers: {
                     'Accept': 'application/json',

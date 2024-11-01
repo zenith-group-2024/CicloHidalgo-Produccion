@@ -11,7 +11,7 @@ export default function EditarAdmin() {
   useEffect(() => {
     const fetchAdmins = async () => {
       try {
-        const response = await fetch('https://ciclo-hidalgo-desarrollo.vercel.app/api/api/admins');
+        const response = await fetch('http://127.0.0.1:8000/api/admins');
         const data = await response.json();
         setAdmins(data);
       } catch (error) {

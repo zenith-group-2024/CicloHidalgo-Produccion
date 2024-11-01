@@ -9,7 +9,7 @@ const FormEliminarAdmin = ({ onClose }) => {
     useEffect(() => {
         const fetchAdmins = async () => {
             try {
-                const response = await fetch('https://ciclo-hidalgo-desarrollo.vercel.app/api/api/admins');
+                const response = await fetch('http://127.0.0.1:8000/api/admins');
                 const data = await response.json();
                 setAdmins(data);
             } catch (error) {
@@ -25,7 +25,7 @@ const FormEliminarAdmin = ({ onClose }) => {
         if (!selectedAdmin) return;
 
         try {
-            const response = await fetch(`https://ciclo-hidalgo-desarrollo.vercel.app/api/api/admin/delete/${selectedAdmin}`, {
+            const response = await fetch(`http://127.0.0.1:8000/api/admin/delete/${selectedAdmin}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',

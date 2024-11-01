@@ -89,7 +89,7 @@ const Dashboard = () => {
   const toggleEstadoPedido = async (pedidoId, estadoActual) => {
     try {
       const nuevoEstado = estadoActual === 'PENDIENTE' ? 'COMPLETO' : 'PENDIENTE';
-      const response = await fetch(`https://ciclo-hidalgo-desarrollo.vercel.app/api/api/toggle-estado-orden/${pedidoId}`, {
+      const response = await fetch(`http://127.0.0.1:8000/api/toggle-estado-orden/${pedidoId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

@@ -53,7 +53,7 @@ function FormularioEnvio() {
 
     try {
       console.log(formOrdenData);
-      const response = await fetch('https://ciclo-hidalgo-desarrollo.vercel.app/api/api/registrar-orden', {
+      const response = await fetch('http://127.0.0.1:8000/api/registrar-orden', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

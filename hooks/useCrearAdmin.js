@@ -10,7 +10,7 @@ export const useCrearAdmin = () => {
     setIsLoading(true);
     try {
       const token = localStorage.getItem('authToken');
-      const response = await fetch('https://ciclo-hidalgo-desarrollo.vercel.app/api/api/admin/create', {
+      const response = await fetch('http://127.0.0.1:8000/api/admin/create', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',

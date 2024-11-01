@@ -6,7 +6,7 @@ export const useDeleteContenido = () => {
   
     const deleteContenido = async (id) => {
       try {
-        const response = await fetch(`https://ciclo-hidalgo-desarrollo.vercel.app/api/api/contenido/delete/${id}`)
+        const response = await fetch(`http://127.0.0.1:8000/api/contenido/delete/${id}`)
         if (response.ok){
           setMessage('Video eliminado correctamente');
         }
