@@ -10,7 +10,7 @@ export const useUpdateUser = () => {
                 throw new Error('ID de usuario no disponible');
             }
             
-            const response = await fetch(`http://127.0.0.1:8000/api/user/update/${state.id}`, {
+            const response = await fetch(`darkslategrey-marten-184177.hostingersite.com/api/user/update/${state.id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

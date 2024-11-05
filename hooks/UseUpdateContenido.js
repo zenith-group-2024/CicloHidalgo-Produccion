@@ -6,7 +6,7 @@ export const useUpdateContenido = () => {
     const editar = async (id, titulo, descripcion, video_incrustado) => {
       setIsLoading(true);
       try {
-          const response = await fetch(`http://127.0.0.1:8000/api/contenido/update/${id}`, {
+          const response = await fetch(`darkslategrey-marten-184177.hostingersite.com/api/contenido/update/${id}`, {
               method: 'PUT',
               headers: {
                   'Accept': 'application/json',

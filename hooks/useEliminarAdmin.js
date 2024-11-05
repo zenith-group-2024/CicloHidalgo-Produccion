@@ -7,7 +7,7 @@ export const useEliminarAdmin = () => {
   const eliminar = async (id) => {
     setIsLoading(true);
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/admin/delete/${id}`, {
+      const response = await fetch(`darkslategrey-marten-184177.hostingersite.com/api/admin/delete/${id}`, {
         method: 'DELETE',
         headers: {
           'Accept': 'application/json',

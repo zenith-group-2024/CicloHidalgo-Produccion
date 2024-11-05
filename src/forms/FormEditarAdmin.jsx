@@ -11,7 +11,7 @@ export default function EditarAdmin() {
   useEffect(() => {
     const fetchAdmins = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/admins');
+        const response = await fetch('darkslategrey-marten-184177.hostingersite.com/api/admins');
         const data = await response.json();
         setAdmins(data);
       } catch (error) {
@@ -48,7 +48,7 @@ export default function EditarAdmin() {
     }
 
     try {
-      const response = await fetch(`http://localhost:8000/api/admin/update/${selectedAdmin.id}`, {
+      const response = await fetch(`darkslategrey-marten-184177.hostingersite.comapi/admin/update/${selectedAdmin.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

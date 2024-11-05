@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { CartContext } from './prueba_carrito';
@@ -7,6 +7,7 @@ import { useFetchProductoDetallado } from '../../hooks/FetchProductoDetallado.js
 const CardDestacado = ({ nombre, title, precio, img, id, pauseCarousel, resumeCarousel }) => {
     const { addToCart } = useContext(CartContext);
     const { producto } = useFetchProductoDetallado(id);
+    
 
     const handleAddToCart = (e) => {
         e.stopPropagation();
@@ -23,7 +24,6 @@ const CardDestacado = ({ nombre, title, precio, img, id, pauseCarousel, resumeCa
         addToCart(producto);
     };
 
-    // Formatear el precio para mostrarlo
     const numericPrice = typeof precio === 'number' ? precio : parseFloat(precio.replace(/[^\d.-]/g, ''));
     const formattedPrice = isNaN(numericPrice)
         ? "Precio no disponible"

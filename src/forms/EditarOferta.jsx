@@ -13,7 +13,7 @@ export default function EditarOferta() {
     useEffect(() => {
         const fetchProductos = async () => {
             try {
-                const response = await fetch('http://127.0.0.1:8000/api/con-descuento/all');
+                const response = await fetch('darkslategrey-marten-184177.hostingersite.com/api/con-descuento/all');
                 const data = await response.json();
                 setProductos(data.productos);
             } catch (error) {
@@ -45,7 +45,7 @@ export default function EditarOferta() {
         }
 
         try {
-            const response = await fetch('http://localhost:8000/api/actualizar-descuento', {
+            const response = await fetch('darkslategrey-marten-184177.hostingersite.com/api/actualizar-descuento', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

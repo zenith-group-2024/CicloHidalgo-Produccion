@@ -7,7 +7,7 @@ export const useFetchProductosFiltro = () => {
 
     const getProductos = async () => {
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/productos/all');
+            const response = await fetch('darkslategrey-marten-184177.hostingersite.com/api/productos/all');
             const result = await response.json();
             setProductos(result.productos);
             setIsLoading(false);

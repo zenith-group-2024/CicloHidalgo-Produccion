@@ -6,7 +6,7 @@ export const useRegistro = () => {
 
   const register = async (email, password, nombre, direccion, cumpleanos, contacto, boletin ) => {
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/user/signin', {
+      const response = await fetch('darkslategrey-marten-184177.hostingersite.com/api/user/signin', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',

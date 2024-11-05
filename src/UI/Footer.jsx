@@ -68,9 +68,6 @@ const Footer = () => {
                             <li className="mb-2">
                                 <Link to="/Contenido" className="hover:underline text-lg">Contenido</Link>
                             </li>
-                            <li className="mb-2">
-                                <Link to="/about" className="hover:underline text-lg">Sobre Nosotros</Link>
-                            </li>
                         </ul>
                     </div>
                 </div>

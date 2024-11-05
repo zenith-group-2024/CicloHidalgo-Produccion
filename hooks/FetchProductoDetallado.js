@@ -7,7 +7,7 @@ export const useFetchProductoDetallado = (id) => {
 
   const getProducto = async (id) => {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/productos/${id}`);
+      const response = await fetch(`darkslategrey-marten-184177.hostingersite.com/api/productos/${id}`);
       if (!response.ok) throw new Error('Error al obtener el producto');
       const result = await response.json();
       setProducto(result.producto);

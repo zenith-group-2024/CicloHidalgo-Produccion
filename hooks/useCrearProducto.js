@@ -6,7 +6,7 @@ export const useCrearProducto = () => {
   
     const crear = async (nombre,marca,especificacion,subcategoria,categoria,modelo,precio,imagen,codigo_barras,cantidad,destacado) => {
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/productos/crear', {
+        const response = await fetch('darkslategrey-marten-184177.hostingersite.com/api/productos/crear', {
           method: 'POST',
           headers: {
             'Accept': 'application/json',

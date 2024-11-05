@@ -5,11 +5,12 @@ const FetchUser = () => {
     const { state } = useContext(GlobalContext);
     const [formData, setFormData] = useState({});
     const [loading, setLoading] = useState(true);
+
     useEffect(() => {
         const fetchUserData = async () => {
             if (state.id) { 
                 try {
-                    const response = await fetch(`http://127.0.0.1:8000/api/user/${state.id}`, {
+                    const response = await fetch(`darkslategrey-marten-184177.hostingersite.com/api/user/${state.id}`, {
                         method: 'GET',
                         headers: {
                             'Authorization': `Bearer ${localStorage.getItem('authToken')}`, 
@@ -17,6 +18,7 @@ const FetchUser = () => {
                         },
                     });
                     const data = await response.json();
+                   
                     setFormData(data);
                 } catch (error) {
                     console.error('Error fetching user data:', error);
@@ -25,10 +27,10 @@ const FetchUser = () => {
                 }
             }
         };
-
+    
         fetchUserData();
     }, [state.id]);
-
+    
     return { formData, loading };
 };
 

@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { useLogin } from '../../hooks/UseLogin.js';
 import { X, Eye, EyeOff } from 'lucide-react'; 
 import Registro from './Registro.jsx';
+import Recuperacion_contraseña from './Recuperacion_contrasena.jsx';
 import { GlobalContext } from '../global/GlobalState.jsx'; 
 import { Link, useNavigate } from "react-router-dom";
 
@@ -13,6 +14,7 @@ const LoginForm = ({ isOpen, onClose }) => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false); 
   const [showRegistro, setShowRegistro] = useState(false);
+  const [showPasswordRecovery, setShowPasswordRecovery] = useState(false); 
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate(); 
 
@@ -43,6 +45,10 @@ const LoginForm = ({ isOpen, onClose }) => {
     setShowRegistro(true);
   };
 
+  const handlePasswordRecoveryClick = () => {
+    setShowPasswordRecovery(true);
+  };
+
   const handleLogout = () => {
     logout(); 
     localStorage.removeItem('authToken');
@@ -53,6 +59,7 @@ const LoginForm = ({ isOpen, onClose }) => {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+
   useEffect(() => {
     if (errorMessage) {
       const timer = setTimeout(() => {
@@ -145,13 +152,19 @@ const LoginForm = ({ isOpen, onClose }) => {
                 Regístrate aquí
               </button>
             </p>
+            <p className="mt-4 text-center text-gray-600">
+              ¿Olvidaste tu contraseña?{' '}
+              <button onClick={handlePasswordRecoveryClick} className="text-red underline">
+                Recuperación de contraseña
+              </button>
+            </p>
           </div>
         </div>
       )}
       {showRegistro && <Registro />}
+      {showPasswordRecovery && <Recuperacion_contraseña onClose={() => setShowPasswordRecovery(false)} />} {/* Modal de recuperación */}
     </>
   );
 };
 
 export default LoginForm;
-

@@ -82,3 +82,34 @@ body {
 .whatsapp_float:hover .whatsapp_icon {
     transform: scale(1.1);
 }
+
+.carousel-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
+  
+  .carousel {
+    display: flex;
+    white-space: nowrap;
+    animation: scroll-carousel-left 30s linear infinite;
+    transition: transform 5s ease-in-out;
+  }
+  
+  @keyframes scroll-carousel-left {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(calc(-137.5%));
+    }
+  }
+  
+  .carousel-container:hover .carousel {
+    animation-play-state: paused;
+  }
+  
+  .carousel-item {
+    height: 100px;
+    width: 250px;
+  }

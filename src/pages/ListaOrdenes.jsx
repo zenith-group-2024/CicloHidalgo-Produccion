@@ -17,7 +17,7 @@ const ListaOrdenes = () => {
     useEffect(() => {
         const fetchOrdenes = async () => {
             try {
-                const response = await fetch(`http://127.0.0.1:8000/api/ordenes-usuario/${state.id}`);
+                const response = await fetch(`darkslategrey-marten-184177.hostingersite.com/api/ordenes-usuario/${state.id}`);
                 if (!response.ok) {
                     throw new Error('Error al obtener las órdenes');
                 }
