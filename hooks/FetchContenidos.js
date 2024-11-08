@@ -7,7 +7,7 @@ export const useFetchContenidos = () => {
   const getContenidos = async () => {
     setIsLoading(true); 
     try {
-      const response = await fetch('darkslategrey-marten-184177.hostingersite.com/api/contenidos/all');
+      const response = await fetch('https://darkslategrey-marten-184177.hostingersite.com/api/contenidos/all');
       const result = await response.json();
       setContenidos(result.contenidos || []);
     } catch (error) {

@@ -7,7 +7,7 @@ export const useEditarAdmin = () => {
   const editar = async (id, nombre, email, contacto, direccion, cumpleanos) => {
     setIsLoading(true);
     try {
-      const response = await fetch(`darkslategrey-marten-184177.hostingersite.com/api/admin/update/${id}`, {
+      const response = await fetch(`https://darkslategrey-marten-184177.hostingersite.com/api/admin/update/${id}`, {
         method: 'PUT',
         headers: {
           'Accept': 'application/json',

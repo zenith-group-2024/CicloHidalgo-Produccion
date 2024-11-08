@@ -8,7 +8,6 @@ const Footer = () => {
             <div className="container mx-auto px-4">
                 <div className="flex flex-wrap justify-between items-start">
 
-
                     <div className="w-full md:w-1/3 mb-6 md:mb-0">
                         <h2 className="text-xl font-bold mb-3">Contacto</h2>
                         <p className="mb-3 text-lg">San Pedro de Poás, Alajuela, Costa Rica</p>
@@ -17,7 +16,6 @@ const Footer = () => {
                             Email:
                             <a href="mailto:ciclohidalgo@hotmail.com" className="hover:underline"> ciclohidalgo@hotmail.com</a>
                         </p>
-
 
                         <div className="flex space-x-4 mt-4">
                             <a
@@ -29,7 +27,6 @@ const Footer = () => {
                             >
                                 <MessageCircle size={30} />
                             </a>
-
 
                             <a
                                 href="https://www.facebook.com/share/R88QGPERJMBBC1QS/?mibextid=LQQJ4d"
@@ -51,7 +48,6 @@ const Footer = () => {
                             </a>
                         </div>
                     </div>
-
 
                     <div className="w-full md:w-1/3 mb-6 md:mb-0">
                         <h2 className="text-xl font-bold mb-3">Enlaces Rápidos</h2>

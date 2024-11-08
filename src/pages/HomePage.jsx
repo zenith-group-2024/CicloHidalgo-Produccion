@@ -8,9 +8,6 @@ import Footer from '../UI/Footer';
 import Dashboard from '../pages/Dashboard';
 import Orden from '../pages/Orden';
 
-
-
-
 const HomePage = () => {
     return (
         <div>
@@ -21,11 +18,7 @@ const HomePage = () => {
             <Info />
             <RedesSociales />
             <Footer />
-           
-
-           
-            
-
+        
         </div>
     );
 };

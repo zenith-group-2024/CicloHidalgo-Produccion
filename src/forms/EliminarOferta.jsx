@@ -3,7 +3,6 @@ import { X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 export default function EliminarOferta() {
-
     const [productos, setProductos] = useState([]);
     const [loading, setLoading] = useState(true);
     const [selectedProducts, setSelectedProducts] = useState({});
@@ -13,7 +12,7 @@ export default function EliminarOferta() {
     useEffect(() => {
         const fetchProductos = async () => {
             try {
-                const response = await fetch('darkslategrey-marten-184177.hostingersite.com/api/con-descuento/all');
+                const response = await fetch('https://darkslategrey-marten-184177.hostingersite.com/api/con-descuento/all');
                 const data = await response.json();
                 setProductos(data.productos);
             } catch (error) {
@@ -45,7 +44,7 @@ export default function EliminarOferta() {
         }
 
         try {
-            const response = await fetch('darkslategrey-marten-184177.hostingersite.com/api/actualizar-descuento', {
+            const response = await fetch('https://darkslategrey-marten-184177.hostingersite.com/api/actualizar-descuento', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -74,7 +73,7 @@ export default function EliminarOferta() {
         }
     };
     const filteredProducts = productos.filter((producto) =>
-        producto.nombre.toLowerCase().includes(searchTerm.toLowerCase()) || 
+        producto.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
         producto.marca.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
@@ -111,26 +110,26 @@ export default function EliminarOferta() {
                             <label className="mx-auto block text-gray-700 text-lg font-bold">Eliminar Oferta</label>
                         </div>
                         <div className="flex flex-col divide-y-2 divide-blue">
-                        {filteredProducts.length > 0 ? (
-                            filteredProducts.map((producto) => (
-                                <div className="grid grid-cols-5 p-4" key={producto.id}>
-                                    <img className="m-auto w-20 h-20 object-contain rounded-lg" src={producto.imagen} alt={producto.nombre} />
-                                    <p className="m-auto">{producto.nombre}</p>
-                                    <p className="m-auto">{producto.marca}</p>
-                                    <p className="m-auto">{producto.descuento}%</p>
-                                    <input
-                                        className="m-auto size-6 accent-red"
-                                        type="checkbox"
-                                        checked={!!selectedProducts[producto.id]}
-                                        onChange={() => handleCheckboxChange(producto.id)}
-                                        value={producto.id}
-                                    />
-                                </div>
-                            ))
-                        ) : (
-                            <p className="text-center">No hay productos en este momento!</p>
-                        )}
-</div>
+                            {filteredProducts.length > 0 ? (
+                                filteredProducts.map((producto) => (
+                                    <div className="grid grid-cols-5 p-4" key={producto.id}>
+                                        <img className="m-auto w-20 h-20 object-contain rounded-lg" src={producto.imagen} alt={producto.nombre} />
+                                        <p className="m-auto">{producto.nombre}</p>
+                                        <p className="m-auto">{producto.marca}</p>
+                                        <p className="m-auto">{producto.descuento}%</p>
+                                        <input
+                                            className="m-auto size-6 accent-red"
+                                            type="checkbox"
+                                            checked={!!selectedProducts[producto.id]}
+                                            onChange={() => handleCheckboxChange(producto.id)}
+                                            value={producto.id}
+                                        />
+                                    </div>
+                                ))
+                            ) : (
+                                <p className="text-center">No hay productos en este momento!</p>
+                            )}
+                        </div>
                         <button type="submit" className="bg-blue text-white px-4 py-2 rounded-full hover:bg-red transition w-full">
                             Eliminar
                         </button>

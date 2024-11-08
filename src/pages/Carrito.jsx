@@ -88,14 +88,12 @@ export const Carrito = () => {
           </Link>
         </div>
 
-        {/* Header de Categorías */}
         <div className="hidden md:grid grid-cols-3 text-center mb-4 bg-gray p-4 rounded-lg shadow-lg">
           <h2 className="font-secondary font-semibold text-xl text-white">Producto</h2>
           <h2 className="font-secondary font-semibold text-xl text-white">Cantidad</h2>
           <h2 className="font-secondary font-semibold text-xl text-white">Subtotal</h2>
         </div>
 
-        {/* Productos */}
         {cart.length === 0 ? (
           <p className="text-center text-gray-600 font-medium">No has agregado productos al carrito.</p>
         ) : (
@@ -104,7 +102,6 @@ export const Carrito = () => {
               key={index}
               className="container mx-auto p-5 shadow-lg rounded-lg bg-white mb-4 md:grid md:grid-cols-3 md:items-center"
             >
-              {/* Sección Producto */}
               <div className="flex flex-col items-center md:flex-row md:items-center lg:mx-auto md:justify-start">
                 <img
                   className="w-24 h-24 object-contain rounded-lg shadow-lg mx-auto md:mr-6"
@@ -114,7 +111,6 @@ export const Carrito = () => {
                 <h3 className="font-primary font-semibold text-lg text-gray-800 mt-2 md:mt-0">{producto.title}</h3>
               </div>
               
-              {/* Sección Cantidad */}
               <div className="flex items-center justify-center mt-4 md:mt-0">
                 <button
                   onClick={() => handleDecreaseQuantity(index)}
@@ -131,7 +127,6 @@ export const Carrito = () => {
                 </button>
               </div>
               
-              {/* Sección Subtotal */}
               <div className="flex items-center justify-center mt-4 md:mt-0">
                 <p className="font-primary font-semibold text-lg text-gray-800 text-center">
                   {`${(producto.precio * producto.quantity).toLocaleString("es-CR", {
@@ -177,7 +172,6 @@ export const Carrito = () => {
 
       <Footer />
 
-      {/* Modal de Confirmación */}
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-white p-8 rounded-lg shadow-xl z-50 text-center">

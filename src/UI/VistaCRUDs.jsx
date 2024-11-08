@@ -9,8 +9,6 @@ import AnadirOferta from '../forms/AnadirOferta';
 import EditarOferta from '../forms/EditarOferta';
 import EliminarOferta from '../forms/EliminarOferta';
 import FormCrearAdmin from '../forms/FormCrearAdmin';
-import FormEditarAdmin from '../forms/FormEditarAdmin';
-import FormEliminarAdmin from '../forms/FormEliminarAdmin';
 import Footer from './Footer';
 import CrudCard from './CRUDCard';
 import Navbar from './Navbar';
@@ -99,12 +97,10 @@ const handleDeleteUser = (userData) => {
     setIsAdding(false);
     setFormType('contenidoDelete');
   };
-
  
   const handleAnadirOferta = () => {setIsAdding(true);setIsEditing(false);setIsDeleting(false);setFormType('ofertaAdd');}
   const handleEditarOferta = () => {setIsAdding(false);setIsEditing(true);setIsDeleting(false);setFormType('ofertaEdit');}
   const handleEliminarOferta = () => {setIsAdding(false);setIsEditing(false);setIsDeleting(true);setFormType('ofertaDelete');}
-
  
   const sampleProduct = {
     nombre: 'Producto Ejemplo',
@@ -117,7 +113,6 @@ const handleDeleteUser = (userData) => {
     cantidad: 10,
     destacado: true,
   };
-
   
   const sampleUser = {
     nombre: 'Usuario Ejemplo',
@@ -133,9 +128,6 @@ const handleDeleteUser = (userData) => {
   return (
     <div className="min-h-screen bg-gray-100 ">
        <Navbar />
-      
-
-      
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-6 mt-16">
         <CrudCard
           title="Productos"
@@ -161,7 +153,6 @@ const handleDeleteUser = (userData) => {
           onEdit={(handleEditarOferta)}
           onDelete={(handleEliminarOferta)}
         />
-      
       </div>
 
 {isAdding && formType === 'producto' && <FormProducto onClose={handleCloseForms} />}

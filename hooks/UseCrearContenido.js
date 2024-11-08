@@ -7,7 +7,7 @@ export const useCrearContenido = () => {
     const crear = async (titulo, descripcion, video_incrustado) => {
         setIsLoading(true);
         try {
-            const response = await fetch('darkslategrey-marten-184177.hostingersite.com/api/contenido/creacion', {
+            const response = await fetch('https://darkslategrey-marten-184177.hostingersite.com/api/contenido/creacion', {
                 method: 'POST', 
                 headers: {
                     'Accept': 'application/json',

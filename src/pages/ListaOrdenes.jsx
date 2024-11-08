@@ -5,7 +5,7 @@ import Navbar from '../UI/Navbar';
 import { Eye, EyeOff, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const ListaOrdenes = () => {
-    const { state } = useContext(GlobalContext); 
+    const { state } = useContext(GlobalContext);
     const [ordenes, setOrdenes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -17,7 +17,7 @@ const ListaOrdenes = () => {
     useEffect(() => {
         const fetchOrdenes = async () => {
             try {
-                const response = await fetch(`darkslategrey-marten-184177.hostingersite.com/api/ordenes-usuario/${state.id}`);
+                const response = await fetch(`https://darkslategrey-marten-184177.hostingersite.com/api/ordenes-usuario/${state.id}`);
                 if (!response.ok) {
                     throw new Error('Error al obtener las órdenes');
                 }
@@ -72,7 +72,7 @@ const ListaOrdenes = () => {
 
             <div className="mx-auto min-h-screen flex flex-col p-8">
                 <h1 className="text-3xl text-black font-bold mb-8 text-center font-primary">Tus Pedidos</h1>
-                
+
                 {ordenes.length === 0 ? (
                     <p className="text-center text-lg font-semibold text-gray">No tienes órdenes registradas.</p>
                 ) : (
@@ -82,7 +82,7 @@ const ListaOrdenes = () => {
                                 <div className="space-y-3">
                                     <p><strong>Cliente:</strong> {orden.nombre} {orden.apellido}</p>
                                     <p><strong>Total:</strong> ₡{orden.total}</p>
-                                    
+
                                     <div className="grid grid-cols-2 gap-2">
                                         <p className="font-semibold text-black">Productos</p>
                                         <p className="font-semibold text-black text-center">Cantidad</p>
@@ -119,7 +119,7 @@ const ListaOrdenes = () => {
                     </ul>
                 )}
 
-                
+
                 <div className="flex justify-center mt-8 space-x-2">
                     <button
                         className="flex items-center gap-2 text-white px-4 py-2 bg-gray rounded-l-lg hover:bg-blue transition disabled:opacity-50 disabled:cursor-not-allowed"

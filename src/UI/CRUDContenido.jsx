@@ -30,12 +30,10 @@ const CRUDContenido = () => {
 
     doc.setFontSize(16);
     doc.text('Informe de Contenidos', 14, 20);
-
-    
     doc.setFontSize(10);
-    doc.setTextColor(75, 85, 99); 
+    doc.setTextColor(75, 85, 99);
     doc.text(`Fecha: ${date}`, 14, 30);
-    doc.setTextColor(0, 0, 0); 
+    doc.setTextColor(0, 0, 0);
 
     const columns = ["Título", "Descripción"];
     const rows = contenidos.map((content) => [
@@ -129,7 +127,6 @@ const CRUDContenido = () => {
           </div>
         )}
       </div>
-
       <Footer />
     </div>
   );

@@ -5,22 +5,23 @@ import Card from "../UI/CardProductos";
 import Navbar from "../UI/Navbar";
 import Footer from "../UI/Footer";
 import { CartContext } from '../UI/prueba_carrito.jsx';
-import { useFetchProductos } from '../../hooks/FetchProductos.js';
 import CheckBoxCategoria from '../UI/CheckBoxCategoria';
 import loadingGif from '../assets/animaciones/AnimationLoading.gif';
 import WhatsAppButton from '../UI/WhatsAppButton';
 import { ChevronDown } from 'lucide-react';
+import GlobalProductos from '../global/GlobalProductos.jsx';
 
 
 
 export function Productos() {
   const { addToCart } = useContext(CartContext);
-  const { productos, isLoading } = useFetchProductos();
+  const [isLoading, setIsLoading] = useState(true);
+  const globalProductos  = useContext(GlobalProductos)
 
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedSubCategories, setSelectedSubCategories] = useState([]);
   const [selectedBrands, setSelectedBrands] = useState([]);
-  const [filteredProductos, setFilteredProductos] = useState(productos);
+  const [filteredProductos, setFilteredProductos] = useState(globalProductos);
 
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 9;
@@ -37,14 +38,23 @@ export function Productos() {
     setSelectedBrands(selected);
   }, []);
 
-  
   const handleToggleFiltros = () => {
     setCheckboxFiltros(!checkboxFiltros);
-};
+  };
+
+  useEffect(() => {
+    if (globalProductos.length > 0) {
+      setIsLoading(true);
+      setTimeout(() => {
+        setFilteredProductos(globalProductos);
+        setIsLoading(false);
+      }, 0);
+    }
+  }, [globalProductos]);
 
   useEffect(() => {
     const filterProducts = () => {
-      const filtered = productos.filter((producto) => {
+      const filtered = globalProductos.filter((producto) => {
         const categoryMatch = selectedCategories.length === 0 || selectedCategories.includes(producto.categoria);
         const subCategoryMatch = selectedSubCategories.length === 0 || selectedSubCategories.includes(producto.subcategoria);
         const brandMatch = selectedBrands.length === 0 || selectedBrands.includes(producto.marca);
@@ -54,13 +64,13 @@ export function Productos() {
     };
 
     filterProducts();
-  }, [productos, selectedCategories, selectedSubCategories, selectedBrands]);
+  }, [globalProductos ,selectedCategories, selectedSubCategories, selectedBrands]);
 
   useEffect(() => {
-    if (productos.length > 0) {
-      setFilteredProductos(productos);
+    if (globalProductos.length > 0) {
+      setFilteredProductos(globalProductos);
     }
-  }, [productos]);
+  }, [globalProductos]);
 
   const cardVariants = {
     hidden: { opacity: 0, scale: 0.9 },
@@ -89,7 +99,7 @@ export function Productos() {
     const searchTerm = e.target.value;
     setSearchProducto(searchTerm)
 
-    const productoFiltrados = productos.filter((producto) =>
+    const productoFiltrados = globalProductos.filter((producto) =>
       producto.nombre.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
@@ -108,15 +118,12 @@ export function Productos() {
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
   const currentProducts = filteredProductos.slice(indexOfFirstProduct, indexOfLastProduct);
-
   const nextPage = () => setCurrentPage((prev) => Math.min(prev + 1, Math.ceil(filteredProductos.length / productsPerPage)));
   const prevPage = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
-
 
   return (
     <div className="bg-gray-50 min-h-screen ">
       <Navbar />
-
       <div className="container mx-auto py-8">
         <motion.div
           className="grid grid-cols-1 md:grid-cols-4 gap-8"
@@ -193,7 +200,6 @@ export function Productos() {
                 ))
               )
 
-
               : isLoading ? (
                 <div className="flex justify-center items-center col-span-full">
                   <img src={loadingGif} alt="Loading" className="w-20 h-20" />
@@ -231,13 +237,13 @@ export function Productos() {
                     <button
                         className="px-4 py-2 text-white bg-slate-500 rounded-md hover:bg-slate-600"
                         onClick={nextPage}
-                        disabled={currentPage === Math.ceil(productos.length / productsPerPage)}
+                        disabled={currentPage === Math.ceil(globalProductos.length / productsPerPage)}
                     >
                         Siguiente
                     </button>
                 </div>
 
-                <WhatsAppButton message="¡Hola! Estoy interesado/a en obtener más información sobre sus productos." />
+      <WhatsAppButton message="¡Hola! Estoy interesado/a en obtener más información sobre sus productos." />
       <Footer />
     </div>
   );

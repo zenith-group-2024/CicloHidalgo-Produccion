@@ -2,13 +2,10 @@ import React, { useState } from 'react';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 
-
 const VistaPedidos = ({ pedidosPendientes = [], pedidosCompletados = [], formatFecha }) => {
     const [paginaActual, setPaginaActual] = useState(1);
     const [searchTerm, setSearchTerm] = useState('');
     const pedidosPorPagina = 5;
-
-    
     const todosLosPedidos = [...pedidosPendientes, ...pedidosCompletados];
     const pedidosFiltrados = todosLosPedidos.filter(pedido => 
         pedido.nombre.toLowerCase().includes(searchTerm.toLowerCase()) || 
@@ -30,7 +27,6 @@ const VistaPedidos = ({ pedidosPendientes = [], pedidosCompletados = [], formatF
         if (paginaActual < totalPaginas) setPaginaActual(paginaActual + 1);
     };
 
-    
     const formatoMoneda = (num) => {
         return num.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     };
@@ -103,10 +99,9 @@ const VistaPedidos = ({ pedidosPendientes = [], pedidosCompletados = [], formatF
             doc.text(`Teléfono: ${pedido.telefono}`, 14, startY + 20);
             doc.text(`Fecha: ${formatFecha(pedido.created_at)}`, 14, startY + 30);
 
-            // Total en negrita
             doc.setFont('helvetica', 'bold');
             doc.text(`Total del Pedido: $${totalPedido}`, 14, startY + 40);
-            doc.setFont('helvetica', 'normal'); // Regresar a fuente normal
+            doc.setFont('helvetica', 'normal');
 
             doc.autoTable({
                 head: [['Producto', 'Cantidad', 'Precio Unitario', 'Subtotal']],
@@ -162,7 +157,6 @@ const VistaPedidos = ({ pedidosPendientes = [], pedidosCompletados = [], formatF
                     </li>
                 ))}
             </ul>
-
             
             <div className="flex justify-between mt-6">
                 <button

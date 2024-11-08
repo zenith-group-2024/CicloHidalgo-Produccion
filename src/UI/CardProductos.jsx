@@ -11,12 +11,19 @@ export const Card = ({ producto }) => {
     threshold: 0.5,
   });
 
-  const precioFormateado = producto.precio.toLocaleString("es-CR", {
-    style: "currency",
-    currency: "CRC",
-    minimumFractionDigits: 2,
-  });
+  const formatearPrecio = (precio) => {
+    return precio.toLocaleString("es-CR", {
+      style: "currency",
+      currency: "CRC",
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    });
+  };
 
+  const precioConDescuento = producto.descuento
+  ? Math.round(producto.precio * (1 - producto.descuento / 100))
+  : producto.precio;
+  
   return (
     <motion.div
       ref={ref}
@@ -33,7 +40,24 @@ export const Card = ({ producto }) => {
           </div>
           <div className="flex-grow flex flex-col justify-between">
             <h1 className="font-primary font-semibold text-lg text-black mt-2">{producto.nombre}</h1>
-            <h2 className="font-primary font-light text-md text-black">{precioFormateado}</h2>
+            {/* Mostrar el precio original y el precio con descuento */}
+            {producto.descuento ? (
+              <div className="">
+                <h2 className="font-primary font-light text-md line-through text-gray-500">
+                  {formatearPrecio(producto.precio)}
+                </h2>
+                <h2 className="font-primary font-semibold text-md">
+                  {formatearPrecio(precioConDescuento)}
+                </h2>
+                <span className="text-sm font-bold px-2 py-1 rounded-md">
+                  {producto.descuento}% de descuento
+                </span>
+              </div>
+            ) : (
+              <h2 className="font-primary font-light text-md text-black">
+                {formatearPrecio(producto.precio)}
+              </h2>
+            )}
           </div>
         </div>
       </Link>

@@ -8,11 +8,9 @@ const ProductosMasVendidos = ({ productos }) => {
     doc.setFontSize(18);
     doc.text('Informe de Productos Más Vendidos', 14, 20);
 
-   
     const fechaActual = new Date().toLocaleDateString();
     doc.setFontSize(12);
     doc.text(`Fecha de generación: ${fechaActual}`, 14, 30);
-
     
     const productosData = productos.map((producto) => [
       producto.nombre,

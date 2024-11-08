@@ -4,7 +4,6 @@ import { useCrearProducto } from '../../hooks/useCrearProducto.js';
 
 const FormProducto = ({ onClose }) => {
   const { crear,message } = useCrearProducto();
-
   const [imagen, setImagen] = useState();
   const inputFile = useRef(null);
 
@@ -22,8 +21,6 @@ const FormProducto = ({ onClose }) => {
   });
 
   const handleChange = (e) => {
-
-    //console.log(e.target.files)
     const { name, value, type, checked, files } = e.target;
     setProducto({
       ...producto,
@@ -38,11 +35,9 @@ const FormProducto = ({ onClose }) => {
       })
       datos.readAsDataURL(e.target.files[0]);
     }
-
   };
 
   const handleSubmit = (e) => {
-    console.log(producto)
     e.preventDefault();
     crear(
       producto.nombre,
@@ -78,14 +73,11 @@ const FormProducto = ({ onClose }) => {
       inputFile.current.type = 'text';
       inputFile.current.type = 'file';
     }
-    
   };
 
   return (
     <div className="min-h-screen bg-gray-100 flex justify-center py-10">
       <div className="relative w-full max-w-4xl mx-4">
-        
-      
 
         <form onSubmit={handleSubmit} className="bg-white p-8 shadow-md rounded-lg space-y-6">
           <h2 className="text-3xl font-semibold mb-6 text-center">Añadir Producto</h2>
@@ -113,7 +105,6 @@ const FormProducto = ({ onClose }) => {
                 className="w-full px-4 py-2 border rounded-lg"
               />
             </div>
-
             
             <div className="mb-4 md:col-span-2">
               <label className="block text-gray-700">Especificación</label>
@@ -124,7 +115,6 @@ const FormProducto = ({ onClose }) => {
                 className="w-full px-4 py-2 border rounded-lg"
               ></textarea>
             </div>
-
            
             <div className="mb-4">
               <label className="block text-gray-700">Subcategoría</label>
@@ -136,7 +126,6 @@ const FormProducto = ({ onClose }) => {
                 className="w-full px-4 py-2 border rounded-lg"
               />
             </div>
-
             
             <div className="mb-4">
               <label className="block text-gray-700">Categoría</label>
@@ -148,7 +137,6 @@ const FormProducto = ({ onClose }) => {
                 className="w-full px-4 py-2 border rounded-lg"
               />
             </div>
-
             
             <div className="mb-4">
               <label className="block text-gray-700">Modelo</label>
@@ -160,7 +148,6 @@ const FormProducto = ({ onClose }) => {
                 className="w-full px-4 py-2 border rounded-lg"
               />
             </div>
-
             
             <div className="mb-4">
               <label className="block text-gray-700">Precio</label>
@@ -172,7 +159,6 @@ const FormProducto = ({ onClose }) => {
                 className="w-full px-4 py-2 border rounded-lg"
               />
             </div>
-
             
             <div className="mb-4">
               <label className="block text-gray-700">Imagen</label>
@@ -185,7 +171,6 @@ const FormProducto = ({ onClose }) => {
                 className="w-full px-4 py-2 border rounded-lg"
               />
             </div>
-
            
             <div className="mb-4">
               <label className="block text-gray-700">Cantidad</label>

@@ -28,12 +28,10 @@ function FormularioEnvio() {
   const handleProvinciaChange = (provincia) => {
     setFormData(prevData => ({ ...prevData, provincia }));
   };
-  
+
   const handleCantonChange = (canton) => {
     setFormData(prevData => ({ ...prevData, ciudad: canton }));
   };
-  
-  
 
   useEffect(() => {
     if (state.id) {
@@ -51,8 +49,6 @@ function FormularioEnvio() {
   const handleFinalizarOrden = async (e) => {
     e.preventDefault();
 
-
-    
     if (formOrdenData.metodo_envio === "retiro") {
       formOrdenData.direccion = null;
       formOrdenData.direccion_detalles = null;
@@ -63,7 +59,7 @@ function FormularioEnvio() {
 
     try {
       console.log(formOrdenData);
-      const response = await fetch('darkslategrey-marten-184177.hostingersite.com/api/registrar-orden', {
+      const response = await fetch('https://darkslategrey-marten-184177.hostingersite.com/api/registrar-orden', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -87,7 +83,7 @@ function FormularioEnvio() {
 
   const openModal = (e) => {
     e.preventDefault();
-    setShowModal(true); 
+    setShowModal(true);
   };
 
   const handleEnvioChange = (envioSeleccionado) => {
@@ -107,7 +103,6 @@ function FormularioEnvio() {
       <Navbar />
       <div className="flex flex-col lg:flex-row gap-8 max-w-7xl mx-auto p-6 flex-1">
 
-        
         <div className="w-full lg:w-1/3 bg-white p-6 sm:p-8 rounded-lg shadow-md">
           <h2 className="text-2xl font-semibold mb-6">Tu Pedido</h2>
           {cart.length === 0 ? (
@@ -134,7 +129,6 @@ function FormularioEnvio() {
           </div>
         </div>
 
-        
         <form className="w-full lg:w-2/3 bg-white rounded-lg p-6 sm:p-8 shadow-md" onSubmit={openModal} >
           <h2 className="text-2xl font-semibold mb-6">Cuenta</h2>
           <input type="email" value={userData?.email || "Sesión no iniciada!"} className="w-full border p-3 mb-6 rounded-lg bg-gray-50" readOnly />
@@ -176,51 +170,49 @@ function FormularioEnvio() {
           </div>
 
           {envio === "envia" && (
-  <>
-    <div className="mb-6">
-      <label className="block text-gray-700 mb-2">Dirección</label>
-      <input
-        type="text"
-        name="direccion"
-        value={formOrdenData.direccion || ""}
-        onChange={handleChange}
-        placeholder="Dirección"
-        className="w-full border p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-        required
-      />
-    </div>
-    <div className="mb-6">
-      <label className="block text-gray-700 mb-2">Casa, apartamento, etc. (opcional)</label>
-      <input
-        type="text"
-        name="direccion_detalles"
-        value={formOrdenData.direccion_detalles || ""}
-        onChange={handleChange}
-        placeholder="Detalles"
-        className="w-full border p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
-    </div>
-    
-    <SelectProvinciaCanton
-  onProvinciaChange={handleProvinciaChange}
-  onCantonChange={handleCantonChange}
-/>
+            <>
+              <div className="mb-6">
+                <label className="block text-gray-700 mb-2">Dirección</label>
+                <input
+                  type="text"
+                  name="direccion"
+                  value={formOrdenData.direccion || ""}
+                  onChange={handleChange}
+                  placeholder="Dirección"
+                  className="w-full border p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                />
+              </div>
+              <div className="mb-6">
+                <label className="block text-gray-700 mb-2">Casa, apartamento, etc. (opcional)</label>
+                <input
+                  type="text"
+                  name="direccion_detalles"
+                  value={formOrdenData.direccion_detalles || ""}
+                  onChange={handleChange}
+                  placeholder="Detalles"
+                  className="w-full border p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
 
-    
-    <div className="mb-6">
-      <label className="block text-gray-700 mb-2">Código Postal</label>
-      <input
-        type="text"
-        name="codigo_postal"
-        value={formOrdenData.codigo_postal || ""}
-        onChange={handleChange}
-        placeholder="Código Postal"
-        className="w-full border p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
-    </div>
-  </>
-)}
+              <SelectProvinciaCanton
+                onProvinciaChange={handleProvinciaChange}
+                onCantonChange={handleCantonChange}
+              />
 
+              <div className="mb-6">
+                <label className="block text-gray-700 mb-2">Código Postal</label>
+                <input
+                  type="text"
+                  name="codigo_postal"
+                  value={formOrdenData.codigo_postal || ""}
+                  onChange={handleChange}
+                  placeholder="Código Postal"
+                  className="w-full border p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+            </>
+          )}
 
           <h3 className="text-2xl font-semibold mb-4">Pago</h3>
           <p className="text-sm text-gray-600 mb-6">Este sitio web solo registra tu pedido. Te invitamos a comunicarte con nosotros por WhatsApp para coordinar el pago.</p>
@@ -245,7 +237,6 @@ function FormularioEnvio() {
           </button>
         </form>
 
-        
         {showModal && (
           <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4">
             <div className="bg-white p-6 rounded-lg shadow-2xl w-full max-w-md transform transition-transform duration-300 ease-out scale-105">
@@ -267,7 +258,6 @@ function FormularioEnvio() {
           </div>
         )}
 
-        
         {showSuccessMessage && (
           <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4">
             <div className="bg-white p-8 rounded-xl shadow-2xl w-full max-w-md text-center transform transition-transform duration-300 ease-out scale-105">

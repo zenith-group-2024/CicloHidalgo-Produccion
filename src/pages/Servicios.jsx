@@ -24,7 +24,6 @@ const Servicios = () => {
         },
     ];
 
-    // Variantes de animación con Framer Motion
     const titleVariants = {
         hidden: { opacity: 0, y: 50 },
         visible: { opacity: 1, y: 0, transition: { duration: 1 } },
@@ -39,8 +38,6 @@ const Servicios = () => {
     return (
         <div className="bg-gray-50 min-h-screen">
             <Navbar />
-            
-            {/* Header con animación */}
             <motion.header 
                 className="bg-gradient-to-r from-gray to-old p-10 text-white text-center rounded-b-lg shadow-lg"
                 initial="hidden"
@@ -57,7 +54,6 @@ const Servicios = () => {
                 </motion.p>
             </motion.header>
 
-            {/* Main Content con tarjetas animadas */}
             <main className="container mx-auto my-12 px-4">
                 <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
                     {servicios.map((servicio, index) => (
@@ -80,7 +76,6 @@ const Servicios = () => {
                     ))}
                 </section>
 
-                {/* Contact Section */}
                 <footer className="mt-16 text-center">
                     <motion.h2 
                         className="text-2xl font-bold mb-6 font-primary text-gray-800"

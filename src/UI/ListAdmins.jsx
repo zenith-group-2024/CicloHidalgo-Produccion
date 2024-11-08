@@ -1,24 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import useFetchAdmins from '../../hooks/useFetchAdmins';
 
 const ListAdmins = () => {
-  const [admins, setAdmins] = useState([]);
-  const [error, setError] = useState('');
+  const { admins, error, loading } = useFetchAdmins();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    fetch('darkslategrey-marten-184177.hostingersite.com/api/admin/users')
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        setAdmins(data);
-      })
-      .catch((error) => setError('Error al obtener los administradores'));
-  }, []);
 
   const handleEdit = (id) => {
     navigate(`/admin/edit/${id}`);
   };
+
+  if (loading) {
+    return <p>Cargando...</p>;
+  }
 
   return (
     <div>

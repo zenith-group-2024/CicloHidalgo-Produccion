@@ -10,7 +10,7 @@ const FetchUser = () => {
         const fetchUserData = async () => {
             if (state.id) { 
                 try {
-                    const response = await fetch(`darkslategrey-marten-184177.hostingersite.com/api/user/${state.id}`, {
+                    const response = await fetch(`https://darkslategrey-marten-184177.hostingersite.com/api/user/${state.id}`, {
                         method: 'GET',
                         headers: {
                             'Authorization': `Bearer ${localStorage.getItem('authToken')}`, 

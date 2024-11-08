@@ -5,7 +5,6 @@ import useEnvioEmailContrasena from '../../hooks/useEnvioEmailContrasena';
 const Recuperacion_contraseña = ({ onClose }) => {
   const [email, setEmail] = useState('');
   const { handleEnvioEmailContrasena, isSending, error, successMessage } = useEnvioEmailContrasena();
-
   const handleSendLink = async (e) => {
     e.preventDefault();
     await handleEnvioEmailContrasena(email);

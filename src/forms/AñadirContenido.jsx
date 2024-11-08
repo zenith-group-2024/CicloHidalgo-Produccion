@@ -3,11 +3,8 @@ import { X } from 'lucide-react';
 import { useCrearContenido } from '../../hooks/UseCrearContenido.js';
 
 const FormContenido = ({ onClose }) => {
-  
   const { crear } = useCrearContenido();
-
   const inputFile = useRef(null);
-
   const [contenido, setContenido] = useState({
     titulo: '',
     descripcion: '',
@@ -16,14 +13,11 @@ const FormContenido = ({ onClose }) => {
   });
 
   const handleChange = (e) => {
-
-  
     const { name, value, type, checked, files } = e.target;
     setContenido({
       ...contenido,
       [name]: type === 'checkbox' ? checked : type === 'file' ? files[0] : value,
     });
-
   };
 
   const handleSubmit = (e) => {
@@ -47,7 +41,6 @@ const FormContenido = ({ onClose }) => {
       inputFile.current.type = 'text';
       inputFile.current.type = 'file';
     }
-    
   };
 
   return (

@@ -6,7 +6,6 @@ import { useFetchContenidos } from '../../hooks/FetchContenidos';
 const FormContenido = ({ onClose }) => {
   const { editar, isLoading, message } = useUpdateContenido();
   const inputFile = useRef(null);
-  
   const { contenidos, isLoading: isLoadingContenidos, setContenidos } = useFetchContenidos();
   const [contenidoSeleccionado, setContenidoSeleccionado] = useState(null);
   
@@ -61,7 +60,6 @@ const FormContenido = ({ onClose }) => {
         )
       );
 
-    
       setShowPopup(true);
       
       setContenido({
@@ -147,7 +145,6 @@ const FormContenido = ({ onClose }) => {
             {message && <p className="text-center text-red-500 mt-4">{message}</p>}
           </form>
         )}
-
       
         {showPopup && (
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white border border-green-500 shadow-lg p-4 rounded-md z-10">

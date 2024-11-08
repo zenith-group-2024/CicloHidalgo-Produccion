@@ -18,9 +18,8 @@ const Registro = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     
-    await register(email, password, nombre, direccion, cumpleanos, contacto, boletin); // Corrección de la variable
+    await register(email, password, nombre, direccion, cumpleanos, contacto, boletin);
 
-    // Resetear los campos
     setNombre('');
     setContacto('');
     setDireccion('');
@@ -28,7 +27,6 @@ const Registro = () => {
     setCumpleanos('');
     setPassword('');
     setBoletin(false);
-
     closeModal();
   };
 

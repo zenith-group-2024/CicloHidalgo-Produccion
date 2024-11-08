@@ -6,7 +6,7 @@ export const useUpdateProducto = () => {
   
     const update = async (id,nombre,marca,especificacion,subcategoria,categoria,modelo,precio,imagen,codigo_barras,cantidad,destacado) => {
       try {
-        const response = await fetch(`darkslategrey-marten-184177.hostingersite.com/api/productos/update/${id}`, {
+        const response = await fetch(`https://darkslategrey-marten-184177.hostingersite.com/api/productos/update/${id}`, {
           method: 'POST',
           headers: {
             'Accept': 'application/json',

@@ -5,14 +5,10 @@ import { useUpdateProducto } from '../../hooks/useUpdateProducto.js';
 import { useFetchProductos } from '../../hooks/FetchProductos.js';
 import { div, label } from 'framer-motion/client';
 
-const FormEditarProducto = ({ onClose }) => {
-
+const FormEditarProducto = ({idProducto }) => {
   const { update } = useUpdateProducto();
-  const { productos } = useFetchProductos();
-
   const [imagen, setImagen] = useState();
   const inputFile = useRef(null);
-
 
   const [producto, setProducto] = useState({
     id: '',
@@ -29,7 +25,6 @@ const FormEditarProducto = ({ onClose }) => {
   });
 
   const handleChange = (e) => {
-
    
     const { name, value, type, checked, files } = e.target;
     setProducto({
@@ -48,43 +43,10 @@ const FormEditarProducto = ({ onClose }) => {
 
   };
 
-  const [selectedOption, setSelectedOption] = useState();
-
-  const handleProductChanged = (option) => {
-  
-    setSelectedOption(option);
-    setProducto((producto) => ({
-      ...producto,
-      id: option.id,
-    }))
-  
-  }
-
-  const [options, setOptions] = useState([]);
-
-  useEffect(() => {
-
-
-  const crearOpciones = () => {
-    const opciones = productos.map(producto => ({
-      value : producto.id,
-      label : producto.nombre,
-      id : producto.id,
-      image : producto.imagen
-    }))
-    setOptions(opciones);
-  }
-
-  crearOpciones(); 
-  },[productos]);
-  
-
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(producto);
     update(
-      producto.id,
+      idProducto,
       producto.nombre,
       producto.marca,
       producto.especificacion,
@@ -118,44 +80,17 @@ const FormEditarProducto = ({ onClose }) => {
       inputFile.current.type = 'text';
       inputFile.current.type = 'file';
     }
-    
   };
 
   return (
     <div className="min-h-screen bg-gray-100 flex justify-center py-10">
+      {console.log(idProducto)}
       <div className="relative w-full max-w-4xl mx-4">
-
-        <button onClick={onClose} className="absolute top-2 right-2">
-          <X className="w-6 h-6 text-gray-700 hover:text-gray-900" />
-        </button>
 
         <form onSubmit={handleSubmit} className="bg-white p-8 shadow-md rounded-lg space-y-6">
           <h2 className="text-3xl font-semibold mb-6 text-center">Editar Producto</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-            <div>
-              <label htmlFor="producto">Seleccione el producto a editar</label>
-               <Select value={selectedOption}
-                options={options}
-                inputId='id'
-                name = "id"
-                onChange={handleProductChanged}
-                formatOptionLabel={option =>(
-                  <div className='container mx-auto p-10 border-black drop-shadow-lg rounded-md bg-white'>
-                      <div className="flex-grow flex flex-col">
-                        <div className="w-full h-48 "> {option.label}
-                          <img 
-                            src={option.image} 
-                            alt={option.label} 
-                            className="w-full h-full object-cover rounded-md" 
-                          />
-                        </div>
-                      </div>
-                  </div>
-                )} />  
-                
-            </div>
 
             <div className="mb-4">
               <label className="block text-gray-700">Nombre del Producto</label>
@@ -244,7 +179,6 @@ const FormEditarProducto = ({ onClose }) => {
                 className="w-full px-4 py-2 border rounded-lg"
               />
             </div>
-
             
             <div className="mb-4">
               <label className="block text-gray-700">Imagen</label>
@@ -258,7 +192,6 @@ const FormEditarProducto = ({ onClose }) => {
                 className="w-full px-4 py-2 border rounded-lg"
               />
             </div>
-
            
             <div className="mb-4">
               <label className="block text-gray-700">Cantidad</label>

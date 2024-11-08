@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { X } from 'lucide-react'; 
+import { X } from 'lucide-react';
 import { useDeleteContenido } from '../../hooks/UseDeleteContenido';
 import { useFetchContenidos } from '../../hooks/FetchContenidos';
 
 const FormEliminarContenido = ({ onClose }) => {
   const { deleteContenido, isLoading, message } = useDeleteContenido();
-  
   const { contenidos, isLoading: isLoadingContenidos } = useFetchContenidos();
   const [contenidoSeleccionado, setContenidoSeleccionado] = useState(null);
-  const [showPopup, setShowPopup] = useState(false); 
+  const [showPopup, setShowPopup] = useState(false);
   const handleSelectChange = (e) => {
     const contenidoId = parseInt(e.target.value);
     const contenidoEncontrado = contenidos.find(cont => cont.id === contenidoId);
@@ -17,16 +16,16 @@ const FormEliminarContenido = ({ onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (contenidoSeleccionado) {
       await deleteContenido(contenidoSeleccionado.id);
-        
+
       setShowPopup(true);
-      setContenidoSeleccionado(null); 
+      setContenidoSeleccionado(null);
     }
   };
 
- 
+
   useEffect(() => {
     if (showPopup) {
       const timer = setTimeout(() => {
@@ -67,7 +66,6 @@ const FormEliminarContenido = ({ onClose }) => {
             {message && <p className="text-center text-red-500 mt-4">{message}</p>}
           </form>
         )}
-
 
         {showPopup && (
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-red-100 border border-red-500 shadow-lg p-4 rounded-md z-10">

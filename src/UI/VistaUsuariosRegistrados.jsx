@@ -7,12 +7,10 @@ const VistaUsuariosRegistrados = ({ usuarios }) => {
     const doc = new jsPDF();
     doc.setFontSize(18);
     doc.text('Informe de Últimos Usuarios Registrados', 14, 20);
-
   
     const fechaActual = new Date().toLocaleDateString();
     doc.setFontSize(12);
     doc.text(`Fecha de generación: ${fechaActual}`, 14, 30);
-
     
     const usuariosData = usuarios.map((usuario) => [
       usuario.nombre,

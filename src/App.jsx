@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import React from 'react';
+import React,{useEffect,useState} from 'react';
 import HomePage from './pages/HomePage';
 import Contenido from './pages/Contenido';
 import Productos from './pages/Productos';
@@ -13,7 +13,6 @@ import PerfilCliente from './pages/PerfilCliente.jsx';
 import { GlobalProvider } from '../src/global/GlobalState.jsx';
 import MenuPerfil from './pages/MenuPerfil.jsx';
 import ListAdmins from './UI/ListAdmins.jsx';
-import FormEditarAdmin from './forms/FormEditarAdmin.jsx';
 import Orden from './pages/Orden';
 import Dashboard from './pages/Dashboard.jsx';
 import "slick-carousel/slick/slick.css";
@@ -22,11 +21,47 @@ import ListaOrdenes from './pages/ListaOrdenes.jsx';
 import CRUDProductos from '../src/UI/CRUDProductos.jsx';
 import CRUDContenido from '../src/UI/CRUDContenido.jsx';
 import Pedidos from './pages/GestionPedidos.jsx';
+import { useFetchProductos } from '../hooks/FetchProductos.js'
+import GlobalProductos from './global/GlobalProductos.jsx'
 
 function App() {
+
+ 
+
+const [productosMap, setProductosMap] = useState([]);
+const {productos} = useFetchProductos();
+
+
+useEffect(() =>{
+
+  const crearProductos = () => {
+    const productosFetch = productos.map(producto => ({
+        value : producto.id,
+        id : producto.id,
+        nombre : producto.nombre,
+        marca: producto.marca,
+        especificacion: producto.especificacion,
+        subcategoria: producto.subcategoria,
+        categoria: producto.categoria,
+        modelo: producto.modelo,
+        precio: producto.precio,
+        codigo_barras: producto.codigo_barras,
+        descuento: producto.descuento,
+        cantidad: producto.cantidad,
+        destacado: producto.destacado,
+        imagen : producto.imagen
+
+    }))
+    setProductosMap(productosFetch)
+  }
+  
+  crearProductos();
+},[productos])
+
   return (
     <BrowserRouter>
       <CartProvider>
+      <GlobalProductos.Provider value={productosMap}>
         <GlobalProvider>
         
           <Routes>
@@ -42,18 +77,16 @@ function App() {
             <Route path="/MenuPerfil" element={<MenuPerfil />} />
             <Route path="/Orden" element={<Orden />} />
             <Route path="/admin/lista" element={<ListAdmins />} />
-            <Route path="/admin/editar/:id" element={<FormEditarAdmin />} />
             <Route path="*" element={<Navigate to="/admin-dashboard" />} />
             <Route path="/ListaOrdenes" element={<ListaOrdenes />} />
             <Route path="/gestionar-productos" element={<CRUDProductos />} />
             <Route path="/gestionarcontenido" element={<CRUDContenido />} />
             <Route path="/Dashboard" element={<Dashboard />} />
             <Route path="/Pedidos" element={<Pedidos />} />
-          
-            
           </Routes>
 
         </GlobalProvider>
+        </GlobalProductos.Provider>
       </CartProvider>
     </BrowserRouter>
   );

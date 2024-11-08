@@ -23,7 +23,7 @@ const Dashboard = () => {
 
   const fetchTotalProductos = async () => {
     try {
-      const response = await fetch(`darkslategrey-marten-184177.hostingersite.com/api/productos/all`);
+      const response = await fetch(`https://darkslategrey-marten-184177.hostingersite.com/api/productos/all`);
       const data = await response.json();
       setTotalProductos(data.productos.length);
     } catch (error) {
@@ -33,7 +33,7 @@ const Dashboard = () => {
 
   const fetchTopProductos = async () => {
     try {
-      const response = await fetch('darkslategrey-marten-184177.hostingersite.com/api/top-productos');
+      const response = await fetch('https://darkslategrey-marten-184177.hostingersite.com/api/top-productos');
       if (response.ok) {
         const data = await response.json();
         setProductosMasVendidos(data.top_productos.map((producto) => ({
@@ -52,7 +52,7 @@ const Dashboard = () => {
 
   const fetchUsuarios = async () => {
     try {
-      const response = await fetch(`darkslategrey-marten-184177.hostingersite.com/api/obtener-usuarios`);
+      const response = await fetch(`https://darkslategrey-marten-184177.hostingersite.com/api/obtener-usuarios`);
       const data = await response.json();
       setUsuariosRegistrados(data.length);
       setUltimosUsuarios(data.slice(-5).reverse());
@@ -63,7 +63,7 @@ const Dashboard = () => {
 
   const fetchPedidos = async () => {
     try {
-      const response = await fetch(`darkslategrey-marten-184177.hostingersite.com/api/ordenes/all`);
+      const response = await fetch(`https://darkslategrey-marten-184177.hostingersite.com/api/ordenes/all`);
       const data = await response.json();
       setTotalPedidos(data.length);
       setPedidosPendientes(data.filter((p) => p.estado === 'PENDIENTE'));

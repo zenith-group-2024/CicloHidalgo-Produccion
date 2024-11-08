@@ -12,7 +12,7 @@ export default function AnadirOferta() {
     useEffect(() => {
         const fetchProductos = async () => {
             try {
-                const response = await fetch('darkslategrey-marten-184177.hostingersite.com/api/sin-descuento/all');
+                const response = await fetch('https://darkslategrey-marten-184177.hostingersite.com/api/sin-descuento/all');
                 const data = await response.json();
                 setProductos(data.productos);
             } catch (error) {
@@ -44,7 +44,7 @@ export default function AnadirOferta() {
         }
 
         try {
-            const response = await fetch('darkslategrey-marten-184177.hostingersite.com/api/actualizar-descuento', {
+            const response = await fetch('https://darkslategrey-marten-184177.hostingersite.com/api/actualizar-descuento', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

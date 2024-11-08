@@ -24,10 +24,6 @@ const LoginForm = ({ isOpen, onClose }) => {
     try {
       const result = await login(email, password); 
       const { token, userId, admin } = result; 
-      console.log(result);
-      console.log("Token:", token);
-      console.log("ID:", userId);
-      console.log("Admin:", admin);
   
       localStorage.setItem('authToken', token); 
       localStorage.setItem('userId', userId); 

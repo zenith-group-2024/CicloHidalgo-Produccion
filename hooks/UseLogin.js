@@ -9,7 +9,7 @@ export const useLogin = () => {
   const login = async (email, password) => {
     setIsLoading(true);
     try {
-      const response = await fetch('darkslategrey-marten-184177.hostingersite.com/api/user/login', {
+      const response = await fetch('https://darkslategrey-marten-184177.hostingersite.com/api/user/login', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',

@@ -10,7 +10,7 @@ export default function DetalleProducto() {
   const { id } = useParams();
   const { producto, isLoading, error } = useFetchProductoDetallado(id);
   const { addToCart } = useContext(CartContext);
-  const [addedToCart, setAddedToCart] = useState(false); // Estado para el mensaje de confirmación
+  const [addedToCart, setAddedToCart] = useState(false);
 
   if (isLoading) return <p className="text-center text-gray-600">Cargando...</p>;
   if (error) return <p className="text-center text-red-500">{error}</p>;
@@ -20,11 +20,18 @@ export default function DetalleProducto() {
     ? producto.precio
     : parseFloat(producto.precio.replace(/[^\d.-]/g, ''));
 
-  const formattedPrice = numericPrice.toLocaleString("es-CR", {
-    style: "currency",
-    currency: "CRC",
-    minimumFractionDigits: 2,
-  });
+  const precioConDescuento = producto.descuento
+    ? numericPrice * (1 - producto.descuento / 100)
+    : numericPrice;
+
+  const formatearPrecio = (precio) => {
+    return precio.toLocaleString("es-CR", {
+      style: "currency",
+      currency: "CRC",
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    });
+  };
 
   const handleAddToCart = (e) => {
     e.stopPropagation();
@@ -35,9 +42,8 @@ export default function DetalleProducto() {
     }
 
     addToCart(producto);
-    setAddedToCart(true); // Muestra el mensaje
+    setAddedToCart(true);
 
-    // Oculta el mensaje después de 2 segundos
     setTimeout(() => {
       setAddedToCart(false);
     }, 2000);
@@ -59,23 +65,31 @@ export default function DetalleProducto() {
             <h1 className="font-primary font-bold text-3xl">{producto.nombre}</h1>
             <p className="font-primary text-lg text-gray">{producto.especificacion}</p>
             <p className="font-primary text-lg text-gray">{hayExistencias(producto.cantidad) ? 'Hay disponibilidad' : 'Esperando Reposición'}</p>
-            <p className="font-primary text-2xl font-semibold text-old">{formattedPrice} (IVAI)</p>
+            
+            {/* Mostrar precio con o sin descuento */}
+            {producto.descuento ? (
+              <div>
+                <p className="font-primary text-lg text-gray line-through">{formatearPrecio(numericPrice)}</p>
+                <p className="font-primary text-2xl font-semibold text-red-600">{formatearPrecio(precioConDescuento)}</p>
+                <span className="text-sm font-bold px-2 py-1 rounded-md bg-red-100 text-red">
+                  {producto.descuento}% de descuento (IVAI)
+                </span>
+              </div>
+            ) : (
+              <p className="font-primary text-2xl font-semibold text-old">{formatearPrecio(numericPrice)} (IVAI)</p>
+            )}
+
             <button
               onClick={handleAddToCart}
               className="mt-4 px-6 py-3 bg-red text-white font-bold rounded-lg shadow-lg transition duration-200 ease-in-out hover:scale-105 hover:bg-red-600"
             >
               Agregar al Carrito
             </button>
-
           </div>
         </div>
       </div>
       
-     <WhatsAppButton message="¡Hola! Estoy interesado/a en obtener más información sobre el producto..." />
-
-
-
-
+      <WhatsAppButton message="¡Hola! Estoy interesado/a en obtener más información sobre el producto..." />
       <Footer />
     </div>
   );

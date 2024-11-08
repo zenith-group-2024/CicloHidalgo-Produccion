@@ -20,10 +20,8 @@ const Navbar = () => {
     setIsAuthModalOpen(false);
   };
 
-
   const isActive = (path) =>
     location.pathname === path ? 'font-bold text-red' : 'font-regular';
-
 
   return (
     <nav className="bg-white p-4 w-full flex flex-col md:flex-row lg:justify-between items-center z-50 shadow-lg">
@@ -121,7 +119,6 @@ const Navbar = () => {
           Servicios
         </Link>
       </div>
-
 
       <div className="flex lg:space-x-4 md:space-x-2 m-4 md:ml-4 relative">
         {!isAdmin && (

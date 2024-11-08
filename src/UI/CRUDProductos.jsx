@@ -1,36 +1,43 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import FormAddProduct from '../forms/AñadirProducto';
-import FormEditProduct from '../forms/EditarProducto';
-import FormDeleteProduct from '../forms/EliminarProducto';
+import FormEditarProducto from '../forms/EditarProducto';
 import FormAddOffer from '../forms/AnadirOferta';
-import { useFetchProductos } from '../../hooks/FetchProductos';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import { Search } from 'lucide-react';
+import GlobalProductos from '../global/GlobalProductos';
+import { useDeleteProducto } from '../../hooks/useDeleteProducto.js';
 
 const CRUDProductos = () => {
     const [activeTab, setActiveTab] = useState('list');
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
-    const { productos, isLoading } = useFetchProductos();
-
-    const filteredProductos = productos.filter((producto) =>
+    const globalProductos = useContext(GlobalProductos);
+    const [isLoading, setIsLoading] = useState(true)
+    const filteredProductos = globalProductos.filter((producto) =>
         producto.nombre.toLowerCase().includes(searchTerm.toLowerCase())
     );
+    const { deleteProducto } = useDeleteProducto();
+
+    useEffect(() => {
+        if (globalProductos.length > 0){
+            setTimeout(() => {
+                setIsLoading(false)
+            },0)
+        }
+    },[globalProductos])
 
     const generatePDF = () => {
         const doc = new jsPDF();
-        const date = new Date().toLocaleDateString(); 
+        const date = new Date().toLocaleDateString();
 
         doc.setFontSize(16);
         doc.text('Informe de Productos', 14, 20);
-
         doc.setFontSize(10);
-        doc.setTextColor(75, 85, 99); 
+        doc.setTextColor(75, 85, 99);
         doc.text(`Fecha: ${date}`, 14, 30);
-
         doc.setTextColor(0, 0, 0);
 
         const columns = ["Nombre", "Marca", "Precio", "Cantidad"];
@@ -54,19 +61,36 @@ const CRUDProductos = () => {
         doc.save('Informe_Productos.pdf');
     };
 
+    const handleDelete = (productoId) => {
+        deleteProducto(productoId);
+        setTimeout(() => {
+            window.location.replace('');
+        },500)
+    }
+
+    useEffect(() => {
+        if(selectedProduct != null) {
+            setActiveTab('edit')
+            console.log(selectedProduct);
+        }
+    },[selectedProduct])
+
+    const handleEdit = (producto) => {
+        setSelectedProduct(producto);   
+    }
+
     return (
         <div className="flex flex-col min-h-screen">
             <Navbar />
-            
+
             <div className="flex-grow p-4 sm:p-6 bg-gray-50">
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mt-4 sm:mt-8 mb-4 sm:mb-8 text-center text-old font-primary">Gestión de Productos</h2>
 
-              
+
                 <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-8 space-y-4 md:space-y-0">
                     <button
                         className="px-4 py-2 sm:px-6 sm:py-2 rounded-full bg-red text-white hover:bg-red-600 text-sm sm:text-base"
                         onClick={() => {
-                            setSelectedProduct(null);
                             setActiveTab('add');
                         }}
                     >
@@ -80,7 +104,7 @@ const CRUDProductos = () => {
                         Generar Informe PDF
                     </button>
 
-                  
+
                     <div className="relative w-full md:w-64">
                         <input
                             type="text"
@@ -95,10 +119,9 @@ const CRUDProductos = () => {
                     </div>
                 </div>
 
-                
+
                 {activeTab === 'add' && <FormAddProduct />}
-                {activeTab === 'edit' && selectedProduct && <FormEditProduct producto={selectedProduct} />}
-                {activeTab === 'delete' && selectedProduct && <FormDeleteProduct producto={selectedProduct} />}
+                {activeTab === 'edit' && selectedProduct != null ? <FormEditarProducto producto={selectedProduct} />:<p>error</p>}
                 {activeTab === 'addOffer' && selectedProduct && <FormAddOffer producto={selectedProduct} />}
                 {activeTab === 'list' && (
                     <div className="mt-6">
@@ -120,18 +143,18 @@ const CRUDProductos = () => {
                                         <p className="text-gray mb-1">Precio: <span className="text-black">${producto.precio}</span></p>
                                         <p className="text-gray">Cantidad: <span className="text-black">{producto.cantidad}</span></p>
 
-                                      
+
                                         <div className="mt-4 flex flex-wrap justify-between space-y-2 sm:space-y-0">
                                             <button
                                                 className="px-3 py-1 bg-blue text-white rounded-full hover:bg-blue-600 transition text-xs sm:text-sm"
-                                                onClick={() => handleEdit(producto)}
+                                                onClick={() => handleEdit(producto)  }
                                             >
                                                 Editar
                                             </button>
-                                            
+
                                             <button
                                                 className="px-3 py-1 bg-red text-white rounded-full hover:bg-red-600 transition text-xs sm:text-sm"
-                                                onClick={() => handleDelete(producto)}
+                                                onClick={() => handleDelete(producto.id)}
                                             >
                                                 Eliminar
                                             </button>

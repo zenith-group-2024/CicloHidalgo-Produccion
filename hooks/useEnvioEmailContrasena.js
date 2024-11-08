@@ -10,7 +10,7 @@ const useEnvioEmailContrasena = () => {
     setError(null);
 
     try {
-      const response = await fetch('darkslategrey-marten-184177.hostingersite.com/api/enviar-correo-personalizado', {
+      const response = await fetch('https://darkslategrey-marten-184177.hostingersite.com/api/enviar-correo-personalizado', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

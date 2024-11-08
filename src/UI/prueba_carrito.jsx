@@ -1,9 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-
-
 export const CartContext = createContext();
-
-
 export const CartProvider = ({ children }) => {
     const [cart, setCart] = useState(() => {
         const savedCart = localStorage.getItem('cart');
@@ -11,12 +7,10 @@ export const CartProvider = ({ children }) => {
     });
     const [message, setMessage] = useState('');
     const [showMessage, setShowMessage] = useState(false);
-
     
     useEffect(() => {
         localStorage.setItem('cart', JSON.stringify(cart));
     }, [cart]);
-
     
     const addToCart = (product) => {
         setCart((prevCart) => {

@@ -5,10 +5,8 @@ import { useDeleteProducto } from '../../hooks/useDeleteProducto.js';
 import { useFetchProductos } from '../../hooks/FetchProductos.js';
 
 const FormEliminarProducto = ({ onClose }) => {
-
   const { deleteProducto } = useDeleteProducto();
   const { productos } = useFetchProductos();
-
   const [producto, setProducto] = useState({
     id: '',
   });
@@ -28,8 +26,6 @@ const FormEliminarProducto = ({ onClose }) => {
   const [options, setOptions] = useState([]);
 
   useEffect(() => {
-
-
   const crearOpciones = () => {
     const opciones = productos.map(producto => ({
       value : producto.id,
@@ -43,15 +39,12 @@ const FormEliminarProducto = ({ onClose }) => {
   crearOpciones(); 
   },[productos]);
   
-
   const handleSubmit = (e) => {
     e.preventDefault();
     deleteProducto(
       producto.id,
     );
-
     onClose();
-    
   };
 
   return (

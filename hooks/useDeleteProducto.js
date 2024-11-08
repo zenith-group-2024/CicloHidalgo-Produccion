@@ -6,7 +6,7 @@ export const useDeleteProducto = () => {
   
     const deleteProducto = async (id) => {
       try {
-        const response = await fetch(`darkslategrey-marten-184177.hostingersite.com/api/productos/delete/${id}`,
+        const response = await fetch(`https://darkslategrey-marten-184177.hostingersite.com/api/productos/delete/${id}`,
           {method: 'DELETE'}
         )
         if (response.ok){
@@ -16,7 +16,6 @@ export const useDeleteProducto = () => {
         console.log(error);
       } finally {
         setIsLoading(false);
-        //console.log(message);
       }
     };
     

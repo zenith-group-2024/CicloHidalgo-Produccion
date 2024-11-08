@@ -6,7 +6,7 @@ export const useFetchProductos = () => {
 
     const getProductos = async () => {
         try {
-            const response = await fetch('darkslategrey-marten-184177.hostingersite.com/api/productos/all');
+            const response = await fetch('https://darkslategrey-marten-184177.hostingersite.com/api/productos/all');
             const result = await response.json();
             setProductos(result.productos);
         } catch (error) {
@@ -22,6 +22,6 @@ export const useFetchProductos = () => {
 
     return {
         productos,
-        isLoading // Ensure isLoading is returned
+        isLoading
     };
 };

@@ -8,8 +8,6 @@ export const Card = (props) => {
 
   const embedUrl = convertToEmbedUrl(props.videoUrl);
 
- 
-
   return (
     <div className="border-b-2 border-border-gray-opacity w-full mt-8 space-x-4 ">
       <div className="rounded-md bg-white border-black w-full mx-auto ">
