@@ -6,6 +6,7 @@ import Navbar from '../UI/Navbar';
 import Footer from '../UI/Footer';
 import { Package, User, LogOut, Box, FileText, Users, Tag, LayoutDashboard, ShoppingBag } from 'lucide-react';
 
+
 const MenuPerfil = () => {
     const navigate = useNavigate();
     const { state, logout } = useContext(GlobalContext);
@@ -54,10 +55,10 @@ const MenuPerfil = () => {
                             <>
                                 <Card title="Gestionar Productos" icon={<Box size={40} className="text-blue" />} onClick={() => navigate('/gestionar-productos')} />
                                 <Card title="Gestionar Contenido" icon={<FileText size={40} className="text-blue" />} onClick={() => navigate('/gestionarcontenido')} />
-                                <Card title="Gestionar Usuarios" icon={<Users size={40} className="text-blue" />} onClick={() => navigate('/gestionUsuarios')} />
-                                <Card title="Gestionar Ofertas" icon={<Tag size={40} className="text-blue" />} onClick={() => navigate('/Ofertas')} />
+                                <Card title="Gestionar Usuarios" icon={<Users size={40} className="text-blue" />} onClick={() => navigate('/gestionarUsuarios')} />
                                 <Card title="Gestionar Pedidos" icon={<ShoppingBag size={40} className="text-blue" />} onClick={() => navigate('/Pedidos')} />
                                 <Card title="Dashboard" icon={<LayoutDashboard size={40} className="text-blue" />} onClick={() => navigate('/Dashboard')} />
+                                <Card title="Gestionar Ofertas" icon={<Tag size={40} className="text-blue" />} onClick={() => navigate('/Ofertas')} />
                             </>
                         ) : (
                             <>

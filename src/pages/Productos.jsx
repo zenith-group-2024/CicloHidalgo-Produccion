@@ -9,7 +9,7 @@ import CheckBoxCategoria from '../UI/CheckBoxCategoria';
 import loadingGif from '../assets/animaciones/AnimationLoading.gif';
 import WhatsAppButton from '../UI/WhatsAppButton';
 import { ChevronDown } from 'lucide-react';
-import GlobalProductos from '../global/GlobalProductos.jsx';
+import {GlobalProductos} from '../global/GlobalProductos.jsx';
 
 
 

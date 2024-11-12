@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useContext } from "react";
-import GlobalProductos from "../global/GlobalProductos";
+import {GlobalProductos} from "../global/GlobalProductos";
 
 const CheckBoxCategoria = ({ onCategoryChange, onBrandChange, onSubCategoryChange }) => {
     const [isLoading, setIsLoading] = useState(true);

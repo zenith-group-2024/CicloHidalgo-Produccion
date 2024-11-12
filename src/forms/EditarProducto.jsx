@@ -1,14 +1,15 @@
-import React, {useEffect, useRef, useState } from 'react';
-import Select from 'react-select';
-import { X } from 'lucide-react'; 
+import React, { useRef, useState } from 'react';
 import { useUpdateProducto } from '../../hooks/useUpdateProducto.js';
-import { useFetchProductos } from '../../hooks/FetchProductos.js';
-import { div, label } from 'framer-motion/client';
+import { useNavigate, useParams } from 'react-router-dom';
+import Navbar from '../UI/Navbar.jsx';
 
-const FormEditarProducto = ({idProducto }) => {
+const FormEditarProducto = () => {
+
+  const {id} = useParams();
   const { update } = useUpdateProducto();
   const [imagen, setImagen] = useState();
   const inputFile = useRef(null);
+  const navegar = useNavigate();
 
   const [producto, setProducto] = useState({
     id: '',
@@ -46,7 +47,7 @@ const FormEditarProducto = ({idProducto }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     update(
-      idProducto,
+      id,
       producto.nombre,
       producto.marca,
       producto.especificacion,
@@ -80,11 +81,14 @@ const FormEditarProducto = ({idProducto }) => {
       inputFile.current.type = 'text';
       inputFile.current.type = 'file';
     }
+    setTimeout(() => {
+      window.location.replace('');
+    },500)
+    navegar('/gestionar-productos')
   };
 
   return (
     <div className="min-h-screen bg-gray-100 flex justify-center py-10">
-      {console.log(idProducto)}
       <div className="relative w-full max-w-4xl mx-4">
 
         <form onSubmit={handleSubmit} className="bg-white p-8 shadow-md rounded-lg space-y-6">

@@ -33,12 +33,17 @@ const AdminManager = () => {
 
   const handleCreateSubmit = async (e) => {
     e.preventDefault();
-    await createAdmin(newAdmin);
-    setNewAdmin({ nombre: '', contacto: '', direccion: '', email: '', password: '' });
-    setShowCreateForm(false);
-    refetch();
-    setMessage({ text: createMessage || 'Administrador creado exitosamente', type: 'success' });
+    const success = await createAdmin(newAdmin);
+    if (success) {
+      setNewAdmin({ nombre: '', contacto: '', direccion: '', email: '', password: '' });
+      setShowCreateForm(false);
+      refetch();
+      setMessage({ text: createMessage || 'Administrador creado exitosamente', type: 'success' });
+    } else {
+      setMessage({ text: createError || 'Error al crear administrador', type: 'error' });
+    }
   };
+  
 
   const handleDelete = async () => {
     if (!selectedAdmin) return;

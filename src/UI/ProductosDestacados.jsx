@@ -3,17 +3,27 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { CartContext } from './prueba_carrito';
 import { useFetchDestacados } from '../../hooks/useFetchDestacados';
+import { GlobalProductosDestacados } from '../global/GlobalProductos';
 import '../index.css';
 
 const ProductosDestacados = () => {
   const carouselRef = useRef(null);
-  const { productosDestacados, isLoading, error } = useFetchDestacados();
+  const [isLoading, setIsLoading] = useState(true);
   const { addToCart } = useContext(CartContext);
+  const destacados = useContext(GlobalProductosDestacados)
+
+  useEffect(() => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false)
+    },0)
+  },[destacados])
+
 
   if (isLoading) return <p>Cargando productos destacados...</p>;
-  if (error) return <p>Error: {error}</p>;
+  //if (error) return <p>Error: {error}</p>;
 
-  const productosDuplicados = [...productosDestacados, ...productosDestacados];
+  const productosDuplicados = [...destacados, ...destacados];
 
   const handleAddToCart = (e, producto) => {
     e.stopPropagation();

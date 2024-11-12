@@ -83,11 +83,6 @@ export default function EditarOferta() {
         <>
             <div className="min-h-screen bg-gray-100 flex justify-center py-10">
                 <div className="relative w-full max-w-4xl mx-4">
-
-                    <button className="absolute top-2 right-2">
-                        <X className="w-6 h-6 text-gray-700 hover:text-gray-900" />
-                    </button>
-
                     <form className="bg-white p-8 shadow-md rounded-lg space-y-6" onSubmit={handleSubmit}>
                         <h2 className="text-3xl font-semibold mb-6 text-center">Editar Oferta</h2>
 

@@ -2,13 +2,13 @@ import React, { useContext, useEffect, useState } from 'react';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import FormAddProduct from '../forms/AñadirProducto';
-import FormEditarProducto from '../forms/EditarProducto';
 import FormAddOffer from '../forms/AnadirOferta';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import { Search } from 'lucide-react';
-import GlobalProductos from '../global/GlobalProductos';
+import {GlobalProductos} from '../global/GlobalProductos';
 import { useDeleteProducto } from '../../hooks/useDeleteProducto.js';
+import { Navigate, NavLink } from 'react-router-dom';
 
 const CRUDProductos = () => {
     const [activeTab, setActiveTab] = useState('list');
@@ -68,17 +68,6 @@ const CRUDProductos = () => {
         },500)
     }
 
-    useEffect(() => {
-        if(selectedProduct != null) {
-            setActiveTab('edit')
-            console.log(selectedProduct);
-        }
-    },[selectedProduct])
-
-    const handleEdit = (producto) => {
-        setSelectedProduct(producto);   
-    }
-
     return (
         <div className="flex flex-col min-h-screen">
             <Navbar />
@@ -121,7 +110,6 @@ const CRUDProductos = () => {
 
 
                 {activeTab === 'add' && <FormAddProduct />}
-                {activeTab === 'edit' && selectedProduct != null ? <FormEditarProducto producto={selectedProduct} />:<p>error</p>}
                 {activeTab === 'addOffer' && selectedProduct && <FormAddOffer producto={selectedProduct} />}
                 {activeTab === 'list' && (
                     <div className="mt-6">
@@ -145,12 +133,12 @@ const CRUDProductos = () => {
 
 
                                         <div className="mt-4 flex flex-wrap justify-between space-y-2 sm:space-y-0">
-                                            <button
+                                            <NavLink
+                                                to={`/Editar/${producto.id}`}
                                                 className="px-3 py-1 bg-blue text-white rounded-full hover:bg-blue-600 transition text-xs sm:text-sm"
-                                                onClick={() => handleEdit(producto)  }
                                             >
                                                 Editar
-                                            </button>
+                                            </NavLink>
 
                                             <button
                                                 className="px-3 py-1 bg-red text-white rounded-full hover:bg-red-600 transition text-xs sm:text-sm"
