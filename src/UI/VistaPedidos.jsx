@@ -121,7 +121,7 @@ const VistaPedidos = ({ pedidosPendientes = [], pedidosCompletados = [], formatF
     };
 
     return (
-        <div className="bg-white p-8 rounded-3xl shadow-lg hover:shadow-2xl">
+        <div className="bg-white p-8 rounded-3xl shadow-lg shadow-2xl">
             <h2 className="text-2xl font-bold mb-6 text-old border-b border-gray pb-4">Pedidos Realizados</h2>
             
            

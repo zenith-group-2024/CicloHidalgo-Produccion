@@ -4,29 +4,46 @@ import { Truck, Store } from "lucide-react";
 import Navbar from "../UI/Navbar.jsx";
 import Footer from "../UI/Footer.jsx";
 import { GlobalContext } from '../global/GlobalState.jsx';
-import FetchUser from "../../hooks/FetchUser.js";
+import FetchUser from "../../hooks/hooksUsuario/FetchUser.js";
 import WhatsAppButton from "../UI/WhatsAppButton.jsx";
 import SelectProvinciaCanton from '../UI/SelectProvinciaCanton';
-
+import { useNavigate } from "react-router-dom";
+import { finalizarOrden } from "../../utils/handleFinalizarOrden.js";
 
 function FormularioEnvio() {
+  const navigate = useNavigate(); // Hook para navegación
   const { state } = useContext(GlobalContext);
   const { cart, setCart } = useContext(CartContext);
   const [envio, setEnvio] = useState("envia");
   const [pago, setPago] = useState("sinpe");
-  const [formOrdenData, setFormData] = useState({
+
+  const initialFormData = {
     user_id: state.id || "",
     metodo_envio: "envia",
     metodo_pago: "sinpe",
     productos: cart.map(item => ({ id: item.id, cantidad: item.quantity })),
-  });
+    provincia: "",
+    ciudad: "",
+  };
+
+
+
+  const [formOrdenData, setFormData] = useState(initialFormData);
   const capitalize = (str) => str.replace(/\b\w/g, char => char.toUpperCase());
   const [showModal, setShowModal] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const { formData: userData, loading: userLoading } = FetchUser();
   const [whatsappMessage, setWhatsappMessage] = useState("Hola! Quisiera información sobre un pedido.");
+
   const handleProvinciaChange = (provincia) => {
     setFormData(prevData => ({ ...prevData, provincia }));
+  };
+
+
+  const handleExitModal = () => {
+    setShowModal(false);
+    setShowSuccessMessage(false);
+    window.location.href = '/'; // Redirecciona al homepage
   };
 
   const handleCantonChange = (canton) => {
@@ -45,39 +62,42 @@ function FormularioEnvio() {
     const { name, value } = e.target;
     setFormData(prevData => ({ ...prevData, [name]: value }));
   };
+  
+  const handleInputChange = (e) => {
+    let value = e.target.value;
+  
+    // Elimina cualquier signo negativo si lo intentan escribir
+    if (value.startsWith('-')) {
+      value = value.slice(1); // Elimina el guion
+    }
+  
+    // Elimina cualquier carácter que no sea un número
+    value = value.replace(/[^0-9]/g, '');
+  
+    // Limita el número a 5 caracteres
+    if (value.length > 5) {
+      value = value.slice(0, 5); // Recorta el valor a 5 caracteres
+    }
+  
+    setFormData(prevData => ({ ...prevData, codigo_postal: value })); // Actualiza el estado con el valor del código postal
+  };
+  
+
+
 
   const handleFinalizarOrden = async (e) => {
     e.preventDefault();
-
-    if (formOrdenData.metodo_envio === "retiro") {
-      formOrdenData.direccion = null;
-      formOrdenData.direccion_detalles = null;
-      formOrdenData.provincia = null;
-      formOrdenData.ciudad = null;
-      formOrdenData.codigo_postal = null;
-    }
-
     try {
-      console.log(formOrdenData);
-      const response = await fetch('https://darkslategrey-marten-184177.hostingersite.com/api/registrar-orden', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
-        },
-        body: JSON.stringify(formOrdenData),
-      });
-
-      if (response.ok) {
-        setShowSuccessMessage(true);
-        setWhatsappMessage("Hola! Acabo de realizar un pedido.");
-      } else {
-        const data = await response.json();
-        console.log(`Error: ${data.message}`);
-      }
+      const authToken = localStorage.getItem('authToken');
+      await finalizarOrden(formOrdenData, authToken);
+      setShowSuccessMessage(true);
+      setCart([]);
+      setFormData(initialFormData);
+      setWhatsappMessage("Hola! Acabo de realizar un pedido.");
     } catch (error) {
-      console.error('Error:', error);
+      console.error(error.message);
     }
+    setCart([]);
     setShowModal(false);
   };
 
@@ -153,7 +173,7 @@ function FormularioEnvio() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
-            {["nombre", "apellido", "telefono"].map(field => (
+            {["nombre", "apellido"].map(field => (
               <div key={field}>
                 <label className="block text-gray-700 mb-2">{field.charAt(0).toUpperCase() + field.slice(1)}</label>
                 <input
@@ -172,6 +192,18 @@ function FormularioEnvio() {
           {envio === "envia" && (
             <>
               <div className="mb-6">
+                <label className="block text-gray-700 mb-2">Telefono</label>
+                <input
+                  type="number"
+                  name="telefono"
+                  value={formOrdenData.telefono || ""}
+                  onChange={handleChange}
+                  placeholder="Telefono"
+                  className="w-full border p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                />
+              </div>
+              <div className="mb-6">
                 <label className="block text-gray-700 mb-2">Dirección</label>
                 <input
                   type="text"
@@ -184,7 +216,7 @@ function FormularioEnvio() {
                 />
               </div>
               <div className="mb-6">
-                <label className="block text-gray-700 mb-2">Casa, apartamento, etc. (opcional)</label>
+                <label className="block text-gray-700 mb-2">Casa, apartamento, etc. <span className="text-gray opacity-70">(opcional)</span></label>
                 <input
                   type="text"
                   name="direccion_detalles"
@@ -201,16 +233,21 @@ function FormularioEnvio() {
               />
 
               <div className="mb-6">
-                <label className="block text-gray-700 mb-2">Código Postal</label>
+                <label className="block text-gray-700 mb-2">
+                  Código Postal <span className="text-gray opacity-70">(opcional)</span>
+                </label>
                 <input
-                  type="text"
+                  type="number"
                   name="codigo_postal"
-                  value={formOrdenData.codigo_postal || ""}
-                  onChange={handleChange}
+                  value={formOrdenData.codigo_postal}
+                  onChange={handleInputChange}
                   placeholder="Código Postal"
                   className="w-full border p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  min="0"
+                  max="99999"
                 />
               </div>
+
             </>
           )}
 
@@ -250,6 +287,7 @@ function FormularioEnvio() {
                 </button>
                 <button
                   onClick={handleFinalizarOrden}
+
                   className="px-6 py-2 bg-red text-white rounded-full shadow-md transition duration-200 ease-in-out transform hover:scale-105">
                   Confirmar
                 </button>
@@ -266,11 +304,12 @@ function FormularioEnvio() {
                 Por favor, comunícate con nosotros por medio de WhatsApp para finalizar el pago.
               </p>
               <button
-                onClick={() => setShowSuccessMessage(false)}
-                className="px-6 py-3 bg-gray  text-white rounded-full shadow-md transition duration-200 ease-in-out transform hover:scale-105"
+                onClick={handleExitModal} // Llama a la función directamente
+                className="px-6 py-3 bg-gray text-white rounded-full shadow-md transition duration-200 ease-in-out transform hover:scale-105"
               >
                 Cerrar
               </button>
+
             </div>
           </div>
         )}

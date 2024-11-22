@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { X } from 'lucide-react'; 
-import { useCrearProducto } from '../../hooks/useCrearProducto.js';
+import { useCrearProducto } from '../../hooks/hooksProductos/useCrearProducto.js';
 
 const FormProducto = ({ onClose }) => {
   const { crear,message } = useCrearProducto();

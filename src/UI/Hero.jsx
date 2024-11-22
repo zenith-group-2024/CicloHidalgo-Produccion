@@ -1,10 +1,11 @@
 import React from 'react';
 import hero from '../assets/images/hero.svg'; 
+import '../index.css';
 const Hero = () => {
     return (
         <section className="relative h-screen flex items-center justify-center">
             <div 
-                className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                className="absolute inset-0 bg-cover bg-center bg-no-repeat bg-hero"
                 style={{ backgroundImage: `url(${hero})` }}
             ></div>
 

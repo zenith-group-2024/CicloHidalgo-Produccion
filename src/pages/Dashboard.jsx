@@ -4,9 +4,14 @@ import Navbar from '../UI/Navbar';
 import ProductosMasVendidos from '../UI/ProductosMasVendidos';
 import UltimosUsuariosRegistrados from '../UI/VistaUsuariosRegistrados';
 import ListaPedidos from '../UI/VistaPedidos';
+import { GlobalContext } from '../global/GlobalState.jsx';
 import {GlobalProductos} from '../global/GlobalProductos';
 
+import { fetchTopProductos, fetchUsuarios, fetchPedidos } from "../../hooks/hooksDashboard/dashboardHooks.js";
+
 const Dashboard = () => {
+  const { state} = useContext(GlobalContext);
+  const { isAdmin } = state;
   const globalProductos = useContext(GlobalProductos);
   const [usuariosRegistrados, setUsuariosRegistrados] = useState(0);
   const [ultimosUsuarios, setUltimosUsuarios] = useState([]);
@@ -16,56 +21,10 @@ const Dashboard = () => {
   const [pedidosCompletados, setPedidosCompletados] = useState([]);
 
   useEffect(() => {
-    fetchTopProductos();
-    fetchUsuarios();
-    fetchPedidos();
-  }, []);
-
-  const fetchTopProductos = async () => {
-    try {
-      const response = await fetch('https://darkslategrey-marten-184177.hostingersite.com/api/top-productos');
-      if (response.ok) {
-        const data = await response.json();
-        const productosWithImages = data.top_productos.map((producto) => {
-          const productoContext = globalProductos.find((p) => p.id === producto.id);
-          return {
-            id: producto.id,
-            nombre: producto.nombre,
-            vendidos: producto.total_cantidad,
-            imagen: productoContext ? productoContext.imagen : null, // Usar imagen del contexto si está disponible
-          };
-        });
-        setProductosMasVendidos(productosWithImages);
-      } else {
-        console.error('Error al obtener productos más vendidos');
-      }
-    } catch (error) {
-      console.error('Error al conectar con la API:', error);
-    }
-  };
-
-  const fetchUsuarios = async () => {
-    try {
-      const response = await fetch(`https://darkslategrey-marten-184177.hostingersite.com/api/obtener-usuarios`);
-      const data = await response.json();
-      setUsuariosRegistrados(data.length);
-      setUltimosUsuarios(data.slice(-5).reverse());
-    } catch (error) {
-      console.error('Error al obtener usuarios:', error);
-    }
-  };
-
-  const fetchPedidos = async () => {
-    try {
-      const response = await fetch(`https://darkslategrey-marten-184177.hostingersite.com/api/ordenes/all`);
-      const data = await response.json();
-      setTotalPedidos(data.length);
-      setPedidosPendientes(data.filter((p) => p.estado === 'PENDIENTE'));
-      setPedidosCompletados(data.filter((p) => p.estado === 'COMPLETO'));
-    } catch (error) {
-      console.error('Error al obtener pedidos:', error);
-    }
-  };
+    fetchTopProductos(globalProductos, setProductosMasVendidos);
+    fetchUsuarios(setUsuariosRegistrados, setUltimosUsuarios);
+    fetchPedidos(setTotalPedidos, setPedidosPendientes, setPedidosCompletados);
+  }, [globalProductos]);
 
   const formatFecha = (fechaISO) => {
     const fecha = new Date(fechaISO);
@@ -79,6 +38,16 @@ const Dashboard = () => {
     </div>
   );
 
+  if (!isAdmin) {
+    return (        
+    <div className="flex flex-col min-h-screen">
+        <Navbar />
+        <div className="flex-grow p-4 sm:p-6 bg-gray-50">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mt-4 sm:mt-8 mb-4 sm:mb-8 text-center text-old font-primary text-red">Acceso Denegado</h2>
+        </div>
+        <Footer />
+    </div>); }
+    else {
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-r from-gray-100 to-gray-200 text-gray-800">
       <Navbar />
@@ -86,7 +55,7 @@ const Dashboard = () => {
         <div className="max-w-6xl mx-auto space-y-12">
           <div className="flex justify-center">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {renderCardInfo('Total de Productos', globalProductos.length, 'bg-gradient-to-tr from-gray to-light')} {/* Usamos el total del contexto */}
+              {renderCardInfo('Total de Productos', globalProductos.length, 'bg-gradient-to-tr from-gray to-light')}
               {renderCardInfo('Pedidos Realizados', totalPedidos, 'bg-gradient-to-tr from-blue to-blue')}
               {renderCardInfo('Usuarios Registrados', usuariosRegistrados, 'bg-gradient-to-tr from-gray to-light')}
             </div>
@@ -105,7 +74,7 @@ const Dashboard = () => {
       </main>
       <Footer />
     </div>
-  );
+  );}
 };
 
 export default Dashboard;

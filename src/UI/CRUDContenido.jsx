@@ -1,15 +1,17 @@
-// CRUDContenido.js
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import FormAddContent from '../forms/AñadirContenido';
 import FormEditContent from '../forms/EditarContenido';
 import FormDeleteContent from '../forms/EliminarContenido';
-import { useFetchContenidos } from '../../hooks/FetchContenidos';
+import { useFetchContenidos } from '../../hooks/hooksContenido/FetchContenidos';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import { GlobalContext } from '../global/GlobalState';
 
 const CRUDContenido = () => {
+  const { state} = useContext(GlobalContext);
+  const { isAdmin } = state;
   const [activeTab, setActiveTab] = useState('list');
   const [selectedContent, setSelectedContent] = useState(null);
   const { contenidos, isLoading, getContenidos } = useFetchContenidos();
@@ -53,6 +55,16 @@ const CRUDContenido = () => {
     doc.save('Informe_Contenidos.pdf');
   };
 
+  if (!isAdmin) {
+    return (        
+    <div className="flex flex-col min-h-screen">
+        <Navbar />
+        <div className="flex-grow p-4 sm:p-6 bg-gray-50">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mt-4 sm:mt-8 mb-4 sm:mb-8 text-center text-old font-primary text-red">Acceso Denegado</h2>
+        </div>
+        <Footer />
+    </div>); }
+    else {
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
@@ -129,7 +141,7 @@ const CRUDContenido = () => {
       </div>
       <Footer />
     </div>
-  );
+  );}
 };
 
 export default CRUDContenido;

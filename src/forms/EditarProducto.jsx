@@ -1,6 +1,7 @@
-import React, { useRef, useState } from 'react';
-import { useUpdateProducto } from '../../hooks/useUpdateProducto.js';
+import React, { useEffect, useRef, useState } from 'react';
+import { useUpdateProducto } from '../../hooks/hooksProductos/useUpdateProducto.js';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useFetchProductoDetallado }from '../../hooks/hooksProductos/FetchProductoDetallado.js'
 import Navbar from '../UI/Navbar.jsx';
 
 const FormEditarProducto = () => {
@@ -10,8 +11,9 @@ const FormEditarProducto = () => {
   const [imagen, setImagen] = useState();
   const inputFile = useRef(null);
   const navegar = useNavigate();
+  const {producto, isLoading, error} = useFetchProductoDetallado(id);
 
-  const [producto, setProducto] = useState({
+  const [productoDetallado, setProductoDetallado] = useState({
     id: '',
     nombre: '',
     marca: '',
@@ -25,11 +27,36 @@ const FormEditarProducto = () => {
     destacado: false,
   });
 
+  if(error) { return <div>{error}</div>}
+
+  useEffect(() => {
+    if (!isLoading) {
+      
+      setProductoDetallado({
+        nombre: producto.nombre,
+        marca: producto.marca,
+        especificacion: producto.especificacion,
+        subcategoria: producto.subcategoria,
+        categoria: producto.categoria,
+        modelo: producto.modelo,
+        precio: producto.precio,
+        imagen: null,
+        cantidad: producto.cantidad,
+        destacado: producto.destacado,
+      });
+    }
+  }, [isLoading, producto]); 
+
+
+  if (isLoading) {
+    return <div>Cargando...</div>;
+  }
+
   const handleChange = (e) => {
    
     const { name, value, type, checked, files } = e.target;
-    setProducto({
-      ...producto,
+    setProductoDetallado({
+      ...productoDetallado,
       [name]: type === 'checkbox' ? checked : type === 'file' ? files[0] : value,
     });
 
@@ -48,20 +75,20 @@ const FormEditarProducto = () => {
     e.preventDefault();
     update(
       id,
-      producto.nombre,
-      producto.marca,
-      producto.especificacion,
-      producto.subcategoria,
-      producto.categoria,
-      producto.modelo,
-      producto.precio,
+      productoDetallado.nombre,
+      productoDetallado.marca,
+      productoDetallado.especificacion,
+      productoDetallado.subcategoria,
+      productoDetallado.categoria,
+      productoDetallado.modelo,
+      productoDetallado.precio,
       imagen,
       '1111',
-      producto.cantidad,
-      producto.destacado,
+      productoDetallado.cantidad,
+      productoDetallado.destacado,
     );
 
-    setProducto(
+    setProductoDetallado(
       {
         nombre: '',
         marca: '',
@@ -86,9 +113,10 @@ const FormEditarProducto = () => {
     },500)
     navegar('/gestionar-productos')
   };
-
+   
   return (
     <div className="min-h-screen bg-gray-100 flex justify-center py-10">
+
       <div className="relative w-full max-w-4xl mx-4">
 
         <form onSubmit={handleSubmit} className="bg-white p-8 shadow-md rounded-lg space-y-6">
@@ -102,7 +130,7 @@ const FormEditarProducto = () => {
                 type="text"
                 name="nombre"
                 id='nombre'
-                value={producto.nombre}
+                value={productoDetallado.nombre}
                 onChange={handleChange}
                 className="w-full px-4 py-2 border rounded-lg"
               />
@@ -114,7 +142,7 @@ const FormEditarProducto = () => {
                 type="text"
                 name="marca"
                 id='marca'
-                value={producto.marca}
+                value={productoDetallado.marca}
                 onChange={handleChange}
                 className="w-full px-4 py-2 border rounded-lg"
               />
@@ -126,7 +154,7 @@ const FormEditarProducto = () => {
               <textarea
                 name="especificacion"
                 id='especificacion'
-                value={producto.especificacion}
+                value={productoDetallado.especificacion}
                 onChange={handleChange}
                 className="w-full px-4 py-2 border rounded-lg"
               ></textarea>
@@ -139,7 +167,7 @@ const FormEditarProducto = () => {
                 type="text"
                 name="subcategoria"
                 id='subcategoria'
-                value={producto.subcategoria}
+                value={productoDetallado.subcategoria}
                 onChange={handleChange}
                 className="w-full px-4 py-2 border rounded-lg"
               />
@@ -152,7 +180,7 @@ const FormEditarProducto = () => {
                 type="text"
                 name="categoria"
                 id='categoria'
-                value={producto.categoria}
+                value={productoDetallado.categoria}
                 onChange={handleChange}
                 className="w-full px-4 py-2 border rounded-lg"
               />
@@ -165,7 +193,7 @@ const FormEditarProducto = () => {
                 type="text"
                 name="modelo"
                 id='modelo'
-                value={producto.modelo}
+                value={productoDetallado.modelo}
                 onChange={handleChange}
                 className="w-full px-4 py-2 border rounded-lg"
               />
@@ -178,7 +206,7 @@ const FormEditarProducto = () => {
                 type="number"
                 name="precio"
                 id='precio'
-                value={producto.precio}
+                value={productoDetallado.precio}
                 onChange={handleChange}
                 className="w-full px-4 py-2 border rounded-lg"
               />
@@ -203,7 +231,7 @@ const FormEditarProducto = () => {
                 type="number"
                 name="cantidad"
                 id='cantidad'
-                value={producto.cantidad}
+                value={productoDetallado.cantidad}
                 onChange={handleChange}
                 className="w-full px-4 py-2 border rounded-lg"
               />
@@ -214,7 +242,7 @@ const FormEditarProducto = () => {
                 type="checkbox"
                 name="destacado"
                 id='destacado'
-                checked={producto.destacado}
+                checked={productoDetallado.destacado}
                 onChange={handleChange}
                 className="mr-2"
               />
@@ -223,7 +251,7 @@ const FormEditarProducto = () => {
           </div>
 
           <button type="submit" className="bg-blue text-white px-4 py-2 rounded-full hover:bg-red transition w-full">
-            Editar
+            Guardar
           </button>
         </form>
       </div>

@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { X } from 'lucide-react'; 
-import { useUpdateContenido } from '../../hooks/UseUpdateContenido';
-import { useFetchContenidos } from '../../hooks/FetchContenidos';
+import { useUpdateContenido } from '../../hooks/hooksContenido/UseUpdateContenido';
+import { useFetchContenidos } from '../../hooks/hooksContenido/FetchContenidos';
 
 const FormContenido = ({ onClose }) => {
   const { editar, isLoading, message } = useUpdateContenido();

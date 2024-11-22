@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import useFetchAdmins from '../../hooks/useFetchAdmins';
+import useFetchAdmins from '../../hooks/hooksAdmin/useFetchAdmins';
 
 const ListAdmins = () => {
   const { admins, error, loading } = useFetchAdmins();

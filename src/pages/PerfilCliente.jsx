@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GlobalContext } from '../global/GlobalState';
-import FetchUser from '../../hooks/FetchUser';
-import { useUpdateUser } from '../../hooks/UserUpdate';
+import FetchUser from '../../hooks/hooksUsuario/FetchUser';
+import { useUpdateUser } from '../../hooks/hooksUsuario/UserUpdate';
 import Navbar from '../UI/Navbar';
 import Footer from '../UI/Footer';
 import { User, Pencil } from 'lucide-react';

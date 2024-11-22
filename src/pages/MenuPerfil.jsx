@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GlobalContext } from '../global/GlobalState';
-import FetchUser from '../../hooks/FetchUser';
+import FetchUser from '../../hooks/hooksUsuario/FetchUser';
 import Navbar from '../UI/Navbar';
 import Footer from '../UI/Footer';
 import { Package, User, LogOut, Box, FileText, Users, Tag, LayoutDashboard, ShoppingBag } from 'lucide-react';

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import useFetchAdmins from '../../hooks/useFetchAdmins';
-import useCreateAdmin from '../../hooks/useCreateAdmin';
-import useUpdateAdmin from '../../hooks/useUpdateAdmin';
-import useDeleteAdmin from '../../hooks/useDeleteAdmin';
+import useFetchAdmins from '../../hooks/hooksAdmin/useFetchAdmins';
+import useCreateAdmin from '../../hooks/hooksAdmin/useCreateAdmin';
+import useUpdateAdmin from '../../hooks/hooksAdmin/useUpdateAdmin';
+import useDeleteAdmin from '../../hooks/hooksAdmin/useDeleteAdmin';
 
 const AdminManager = () => {
   const [selectedAdmin, setSelectedAdmin] = useState(null);

@@ -3,6 +3,7 @@ import { GlobalContext } from '../global/GlobalState';
 import Footer from '../UI/Footer';
 import Navbar from '../UI/Navbar';
 import { Eye, EyeOff, ChevronLeft, ChevronRight } from 'lucide-react';
+import { fetchOrdenes } from "../../hooks/hooksOrdenes/fetchOrdenes.js";
 
 const ListaOrdenes = () => {
     const { state } = useContext(GlobalContext);
@@ -15,13 +16,9 @@ const ListaOrdenes = () => {
     const [fadeAnimation, setFadeAnimation] = useState(false);
 
     useEffect(() => {
-        const fetchOrdenes = async () => {
+        const cargarOrdenes = async () => {
             try {
-                const response = await fetch(`https://darkslategrey-marten-184177.hostingersite.com/api/ordenes-usuario/${state.id}`);
-                if (!response.ok) {
-                    throw new Error('Error al obtener las órdenes');
-                }
-                const data = await response.json();
+                const data = await fetchOrdenes(state.id);
                 setOrdenes(data);
                 setLoading(false);
             } catch (err) {
@@ -31,7 +28,7 @@ const ListaOrdenes = () => {
         };
 
         if (state.id) {
-            fetchOrdenes();
+            cargarOrdenes();
         }
     }, [state.id]);
 

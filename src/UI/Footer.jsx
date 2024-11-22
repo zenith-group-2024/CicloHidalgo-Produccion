@@ -1,8 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Facebook, Instagram, MessageCircle } from 'lucide-react';
 
 const Footer = () => {
+
+    const location = useLocation(); // Hook para obtener la ruta actual
+    const isHomePage = location.pathname === '/'; // Verificar si la ruta actual es la página de inicio
+
     return (
         <footer className="bg-gray text-white py-10">
             <div className="container mx-auto px-4">
@@ -17,6 +21,7 @@ const Footer = () => {
                             <a href="mailto:ciclohidalgo@hotmail.com" className="hover:underline"> ciclohidalgo@hotmail.com</a>
                         </p>
 
+                        {!isHomePage && (
                         <div className="flex space-x-4 mt-4">
                             <a
                                 href={`https://wa.me/50683158021?text=${encodeURIComponent("¡Hola! Me gustaría obtener asistencia. ¿Podrían ayudarme?")}`}
@@ -47,7 +52,10 @@ const Footer = () => {
                                 <Instagram size={30} />
                             </a>
                         </div>
+                    )}
                     </div>
+                  
+
 
                     <div className="w-full md:w-1/3 mb-6 md:mb-0">
                         <h2 className="text-xl font-bold mb-3">Enlaces Rápidos</h2>

@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
-import { GlobalContext } from '../src/global/GlobalState';
+import { GlobalContext } from '../../src/global/GlobalState';
 
 const FetchUser = () => {
     const { state } = useContext(GlobalContext);

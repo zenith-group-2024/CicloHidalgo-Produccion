@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { GlobalContext } from '../global/GlobalState.jsx';
 import Navbar from '../UI/Navbar';
 import Footer from '../UI/Footer';
-import useFetchAdmins from '../../hooks/useFetchAdmins';
-import useCreateAdmin from '../../hooks/useCreateAdmin';
-import useUpdateAdmin from '../../hooks/useUpdateAdmin';
-import useDeleteAdmin from '../../hooks/useDeleteAdmin';
+import useFetchAdmins from '../../hooks/hooksAdmin/useFetchAdmins';
+import useCreateAdmin from '../../hooks/hooksAdmin/useCreateAdmin';
+import useUpdateAdmin from '../../hooks/hooksAdmin/useUpdateAdmin';
+import useDeleteAdmin from '../../hooks/hooksAdmin/useDeleteAdmin';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 
 const CRUDUsuarios = () => {
+  const { state} = useContext(GlobalContext);
+  const { isAdmin } = state;
   const [selectedAdmin, setSelectedAdmin] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [showCreateForm, setShowCreateForm] = useState(false);
@@ -92,7 +95,6 @@ const CRUDUsuarios = () => {
     )
   );
 
-  // Generar informe PDF de los administradores
   const generarInformePDF = () => {
     const doc = new jsPDF();
     doc.setFontSize(16);
@@ -110,12 +112,22 @@ const CRUDUsuarios = () => {
       body: adminsData,
       startY: 30,
       styles: { fontSize: 12 },
-      headStyles: { fillColor: [41, 128, 185] }, // Color de cabecera azul
+      headStyles: { fillColor: [41, 128, 185] },
     });
 
     doc.save('informe_administradores.pdf');
   };
 
+  if (!isAdmin) {
+    return (        
+    <div className="flex flex-col min-h-screen">
+        <Navbar />
+        <div className="flex-grow p-4 sm:p-6 bg-gray-50">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mt-4 sm:mt-8 mb-4 sm:mb-8 text-center text-old font-primary text-red">Acceso Denegado</h2>
+        </div>
+        <Footer />
+    </div>); }
+    else {
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
       <Navbar />
@@ -317,7 +329,7 @@ const CRUDUsuarios = () => {
       </main>
       <Footer />
     </div>
-  );
+  );}
 };
 
 export default CRUDUsuarios;

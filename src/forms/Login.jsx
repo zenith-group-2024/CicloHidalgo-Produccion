@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { useLogin } from '../../hooks/UseLogin.js';
+import { useLogin } from '../../hooks/hooksUsuario/UseLogin.js';
 import { X, Eye, EyeOff } from 'lucide-react'; 
 import Registro from './Registro.jsx';
 import Recuperacion_contraseña from './Recuperacion_contrasena.jsx';
@@ -7,7 +7,7 @@ import { GlobalContext } from '../global/GlobalState.jsx';
 import { Link, useNavigate } from "react-router-dom";
 
 const LoginForm = ({ isOpen, onClose }) => {
-  const { login, isLoading, userId } = useLogin(); 
+  const { login, isLoading} = useLogin(); 
   const { state = {}, setToken, logout } = useContext(GlobalContext);
   const { isAuthenticated = false } = state; 
   const [email, setEmail] = useState('');
@@ -16,7 +16,7 @@ const LoginForm = ({ isOpen, onClose }) => {
   const [showRegistro, setShowRegistro] = useState(false);
   const [showPasswordRecovery, setShowPasswordRecovery] = useState(false); 
   const [errorMessage, setErrorMessage] = useState('');
-  const navigate = useNavigate(); 
+ 
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -33,7 +33,7 @@ const LoginForm = ({ isOpen, onClose }) => {
       onClose();
     } catch (e) {
       setErrorMessage(e.message); 
-      console.log(e.message); 
+   
     }
   };
 
@@ -43,6 +43,10 @@ const LoginForm = ({ isOpen, onClose }) => {
 
   const handlePasswordRecoveryClick = () => {
     setShowPasswordRecovery(true);
+  };
+
+  const handleCloseRegistro = () => {
+    setShowRegistro(false);
   };
 
   const handleLogout = () => {
@@ -143,21 +147,21 @@ const LoginForm = ({ isOpen, onClose }) => {
             )}
 
             <p className="mt-4 text-center text-gray-600">
-              No tienes una cuenta?{' '}
+            ¿No tienes una cuenta?{' '}
               <button onClick={handleRegisterClick} className="text-red underline">
                 Regístrate aquí
               </button>
             </p>
             <p className="mt-4 text-center text-gray-600">
-              ¿Olvidaste tu contraseña?{' '}
+              {' '}
               <button onClick={handlePasswordRecoveryClick} className="text-red underline">
-                Recuperación de contraseña
+              ¿Olvidaste tu contraseña?
               </button>
             </p>
           </div>
         </div>
       )}
-      {showRegistro && <Registro />}
+      {showRegistro && <Registro onClose={handleCloseRegistro} />}
       {showPasswordRecovery && <Recuperacion_contraseña onClose={() => setShowPasswordRecovery(false)} />} {/* Modal de recuperación */}
     </>
   );

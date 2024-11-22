@@ -1,6 +1,6 @@
 
 import { useState,useContext } from 'react';
-import { GlobalContext } from '../src/global/GlobalState.jsx';
+import { GlobalContext } from '../../src/global/GlobalState.jsx';
 
 export const useLogin = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -19,7 +19,6 @@ export const useLogin = () => {
       });
 
       const result = await response.json();
-      console.log("Resultado del inicio de sesión:", result); 
 
       if (response.ok) {
         const { token, user } = result;

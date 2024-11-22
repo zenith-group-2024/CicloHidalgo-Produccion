@@ -21,16 +21,14 @@ import ListaOrdenes from './pages/ListaOrdenes.jsx';
 import CRUDProductos from '../src/UI/CRUDProductos.jsx';
 import CRUDContenido from '../src/UI/CRUDContenido.jsx';
 import Pedidos from './pages/GestionPedidos.jsx';
-import { useFetchProductos } from '../hooks/FetchProductos.js'
-import {GlobalProductos, GlobalProductosDestacados} from './global/GlobalProductos.jsx'
+import { useFetchProductos } from '../hooks/hooksProductos/FetchProductos.js'
+import {GlobalProductos, GlobalProductosDestacados}  from './global/GlobalProductos.jsx'
 import CRUDUsuarios from './UI/CRUDUsuarios.jsx';
 import Ofertas from './pages/Ofertas.jsx';
 import FormEditarProducto from './forms/EditarProducto.jsx';
-import { useFetchDestacados } from '../hooks/useFetchDestacados.js';
+import { useFetchDestacados } from '../hooks/hooksProductos/useFetchDestacados.js';
 
 function App() {
-
- 
 
 const [productosMap, setProductosMap] = useState([]);
 const {productos} = useFetchProductos();

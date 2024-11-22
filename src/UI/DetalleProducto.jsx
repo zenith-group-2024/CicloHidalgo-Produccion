@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useParams } from 'react-router-dom';
-import { useFetchProductoDetallado } from '../../hooks/FetchProductoDetallado.js';
+import { useFetchProductoDetallado } from '../../hooks/hooksProductos/FetchProductoDetallado.js';
 import Navbar from './Navbar.jsx';
 import { CartContext } from '../UI/prueba_carrito.jsx';
 import Footer from "./Footer.jsx";
@@ -9,7 +9,7 @@ import WhatsAppButton from "./WhatsAppButton.jsx";
 export default function DetalleProducto() {
   const { id } = useParams();
   const { producto, isLoading, error } = useFetchProductoDetallado(id);
-  const { addToCart } = useContext(CartContext);
+  const { addToCart, cart } = useContext(CartContext);
   const [addedToCart, setAddedToCart] = useState(false);
 
   if (isLoading) return <p className="text-center text-gray-600">Cargando...</p>;
@@ -49,7 +49,9 @@ export default function DetalleProducto() {
     }, 2000);
   };
 
-  const hayExistencias = (cantidad) => cantidad !== 0;
+  const productoEnCarrito = cart.find(item => item.id === producto.id);
+  const cantidadEnCarrito = productoEnCarrito ? productoEnCarrito.quantity : 0;
+  const cantidadRestante = producto.cantidad - cantidadEnCarrito;
 
   return (
     <div className="bg-gray-50 min-h-screen">
@@ -64,9 +66,7 @@ export default function DetalleProducto() {
           <div className="flex flex-col justify-center space-y-6">
             <h1 className="font-primary font-bold text-3xl">{producto.nombre}</h1>
             <p className="font-primary text-lg text-gray">{producto.especificacion}</p>
-            <p className="font-primary text-lg text-gray">{hayExistencias(producto.cantidad) ? 'Hay disponibilidad' : 'Esperando Reposición'}</p>
             
-            {/* Mostrar precio con o sin descuento */}
             {producto.descuento ? (
               <div>
                 <p className="font-primary text-lg text-gray line-through">{formatearPrecio(numericPrice)}</p>
@@ -79,12 +79,17 @@ export default function DetalleProducto() {
               <p className="font-primary text-2xl font-semibold text-old">{formatearPrecio(numericPrice)} (IVAI)</p>
             )}
 
-            <button
+<button
               onClick={handleAddToCart}
-              className="mt-4 px-6 py-3 bg-red text-white font-bold rounded-lg shadow-lg transition duration-200 ease-in-out hover:scale-105 hover:bg-red-600"
+              disabled={cantidadRestante === 0}
+              className={`text-white mt-4 px-6 py-3 font-bold rounded-lg shadow-lg transition duration-200 ease-in-out hover:scale-105
+                ${cantidadRestante === 0 ? "bg-gray cursor-not-allowed" : "bg-red"}`}
             >
-              Agregar al Carrito
+              {cantidadRestante === 0 ? "Agotado" : "Agregar al Carrito"}
             </button>
+            {addedToCart && (
+              <p className="text-green-500 font-semibold mt-2">¡Producto agregado al carrito!</p>
+            )}
           </div>
         </div>
       </div>

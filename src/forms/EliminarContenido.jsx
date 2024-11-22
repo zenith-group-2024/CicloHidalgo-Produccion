@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
-import { useDeleteContenido } from '../../hooks/UseDeleteContenido';
-import { useFetchContenidos } from '../../hooks/FetchContenidos';
+import { useDeleteContenido } from '../../hooks/hooksContenido/UseDeleteContenido';
+import { useFetchContenidos } from '../../hooks/hooksContenido/FetchContenidos';
 
 const FormEliminarContenido = ({ onClose }) => {
   const { deleteContenido, isLoading, message } = useDeleteContenido();

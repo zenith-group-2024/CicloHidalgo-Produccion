@@ -30,7 +30,7 @@ const ProductosMasVendidos = ({ productos }) => {
   };
 
   return (
-    <div className="bg-white p-8 rounded-3xl shadow-lg hover:shadow-2xl">
+    <div className="bg-white p-8 rounded-3xl shadow-lg shadow-2xl">
       <h2 className="text-2xl font-bold mb-6 text-old border-b border-gray pb-4">Productos Más Vendidos</h2>
       <button
         onClick={generarPDF}
@@ -38,27 +38,29 @@ const ProductosMasVendidos = ({ productos }) => {
       >
         Descargar Informe de Productos
       </button>
-      <table className="w-full border-separate border-spacing-y-2">
-        <thead>
-          <tr>
-            <th className="p-4 text-left font-medium text-gray uppercase tracking-wide border-b border-gray-300">Producto</th>
-            <th className="p-4 text-left font-medium text-gray uppercase tracking-wide border-b border-gray-300">Cantidad Vendida</th>
-          </tr>
-        </thead>
-        <tbody>
-          {productos.map((producto) => (
-            <tr key={producto.id} className="bg-white shadow-sm rounded-lg">
-              <td className="p-4 text-gray flex items-center space-x-4 border border-gray rounded-l-lg">
-                <img src={producto.imagen} alt={producto.nombre} className="h-14 w-14 object-cover rounded-md shadow-sm transition-transform" />
-                <span className="font-semibold text-black transition">{producto.nombre}</span>
-              </td>
-              <td className="p-4 text-black font-medium text-lg border border-gray rounded-r-lg transition">
-                {producto.vendidos.toLocaleString('es-ES')}
-              </td>
+      <div className="overflow-x-auto">
+        <table className="min-w-full table-auto">
+          <thead>
+            <tr>
+              <th className="p-4 text-left font-medium text-gray uppercase tracking-wide border-b border-gray-300">Producto</th>
+              <th className="p-4 text-left font-medium text-gray uppercase tracking-wide border-b border-gray-300">Cantidad Vendida</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {productos.map((producto) => (
+              <tr key={producto.id} className="bg-white shadow-sm rounded-lg">
+                <td className="p-4 text-gray flex items-center space-x-4 border border-gray rounded-l-lg">
+                  <img src={producto.imagen} alt={producto.nombre} className="h-14 w-14 object-cover rounded-md shadow-sm" />
+                  <span className="font-semibold text-black">{producto.nombre}</span>
+                </td>
+                <td className="p-4 text-black font-medium text-lg border border-gray rounded-r-lg">
+                  {producto.vendidos.toLocaleString('es-ES')}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

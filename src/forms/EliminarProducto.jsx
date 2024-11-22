@@ -1,8 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { X } from 'lucide-react'; 
 import Select from 'react-select';
-import { useDeleteProducto } from '../../hooks/useDeleteProducto.js';
-import { useFetchProductos } from '../../hooks/FetchProductos.js';
+import { useDeleteProducto } from '../../hooks/hooksProductos/useDeleteProducto.js';
+import { useFetchProductos } from '../../hooks/hooksProductos/FetchProductos.js';
 
 const FormEliminarProducto = ({ onClose }) => {
   const { deleteProducto } = useDeleteProducto();

@@ -5,11 +5,15 @@ import { Link } from 'react-router-dom';
 import { CartContext } from '../UI/prueba_carrito';
 
 export const Card = ({ producto }) => {
-  const { addToCart, message, showMessage } = useContext(CartContext);
+  const { addToCart, message, showMessage, cart } = useContext(CartContext);
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.5,
   });
+
+  const productoEnCarrito = cart.find(item => item.id === producto.id);
+  const cantidadEnCarrito = productoEnCarrito ? productoEnCarrito.quantity : 0;
+  const cantidadRestante = producto.cantidad - cantidadEnCarrito;
 
   const formatearPrecio = (precio) => {
     return precio.toLocaleString("es-CR", {
@@ -62,20 +66,22 @@ export const Card = ({ producto }) => {
         </div>
       </Link>
 
-   
       <button
         onClick={() => addToCart(producto)}
-        className="absolute bottom-4 right-4 bg-red text-white px-4 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden xl:block"
-      >
-        Añadir al carrito
+        disabled={cantidadRestante === 0}
+        className={`absolute bottom-4 right-4 py-2 px-4  text-white rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden xl:block
+          ${cantidadRestante === 0 ? "bg-gray cursor-not-allowed" : "bg-red group-hover:opacity-100"}`}>
+        {cantidadRestante === 0 ? "Agotado!" : "Añadir al carrito"}
       </button>
 
-      
+
       <button
         onClick={() => addToCart(producto)}
-        className="bg-red text-white font-medium py-2 px-4 mt-4 rounded-lg shadow-md hover:bg-blue-600 xl:hidden ml-auto"
-      >
-        Añadir al carrito
+        disabled={cantidadRestante === 0}
+        className={`text-white font-medium py-2 px-4 mt-4 rounded-lg shadow-md xl:hidden ml-auto
+           ${cantidadRestante === 0 ? "bg-gray cursor-not-allowed" : "bg-red group-hover:opacity-100"}
+          `}>
+        {cantidadRestante === 0 ? "Agotado!" : "Añadir al carrito"}
       </button>
     </motion.div>
   );

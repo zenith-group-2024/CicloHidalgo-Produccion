@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
-import useEnvioEmailContrasena from '../../hooks/useEnvioEmailContrasena';
+import useEnvioEmailContrasena from '../../hooks/hooksUsuario/useEnvioEmailContrasena';
 
 const Recuperacion_contraseña = ({ onClose }) => {
   const [email, setEmail] = useState('');

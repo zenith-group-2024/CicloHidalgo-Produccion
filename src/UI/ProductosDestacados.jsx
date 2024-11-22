@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { CartContext } from './prueba_carrito';
-import { useFetchDestacados } from '../../hooks/useFetchDestacados';
+import { useFetchDestacados } from '../../hooks/hooksProductos/useFetchDestacados';
 import { GlobalProductosDestacados } from '../global/GlobalProductos';
 import '../index.css';
 
@@ -21,7 +21,7 @@ const ProductosDestacados = () => {
 
 
   if (isLoading) return <p>Cargando productos destacados...</p>;
-  //if (error) return <p>Error: {error}</p>;
+
 
   const productosDuplicados = [...destacados, ...destacados];
 

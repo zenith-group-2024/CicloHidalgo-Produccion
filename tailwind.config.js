@@ -21,6 +21,7 @@ export default {
         gray: '#6C757E',
         old: '#4b5563',
         light: '#A2ABB3',
+        whine: '#D32F2F',
        
       },
       fontFamily: {
